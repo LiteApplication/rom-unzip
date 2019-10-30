@@ -12,3 +12,4 @@ else
     echo Installing python3
     sudo apt install -y python3
 fi
+exit 0
