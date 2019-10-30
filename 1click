@@ -1,0 +1,14 @@
+#!/bin/bash
+VERSION="0.1"
+echo "Welcome to ROM Unzipper by LiteApplication"
+if (whoami != root)
+  then echo "You have to run this script as root. \n Try sudo ./1click"
+  exit 1
+
+echo "Checking dependances"
+if command -v python3 &>/dev/null; then
+    echo Python 3 is installed
+else
+    echo Installing python3
+    sudo apt install -y python3
+fi
