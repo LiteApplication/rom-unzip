@@ -13,6 +13,13 @@ else
     sudo sudo apt-get install python3 python -qq > /dev/null
     echo "        Done."
 fi
+if command -v git &>/dev/null; then
+    echo "    Git is installed"
+else
+    echo "    Installing git..."
+    sudo sudo apt-get install git -qq > /dev/null
+    echo "        Done."
+fi
 if command -v brotli &>/dev/null; then
     echo "    Brotli is installed"
 else
@@ -20,4 +27,12 @@ else
     sudo sudo apt-get install brotli -qq > /dev/null
     echo "        Done."
 fi
+echo "Downloading program..."
+mkdir files
+cd files
+git clone https://github.com/LiteApplication/rom-unzip.git --quiet
+echo "    Done"
+cd ..
+mkdir rom
+sudo python3 ./files/src/main.py
 exit 0
