@@ -35,7 +35,7 @@ cd files
 git clone https://github.com/LiteApplication/rom-unzip.git --quiet
 echo "Moving program..."
 cd rom-unzip
-mv -R src/* ../
+mv src/* ../
 cd ..
 rm -fr rom-unzip
 mkdir rom
