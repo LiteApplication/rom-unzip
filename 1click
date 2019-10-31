@@ -1,9 +1,14 @@
 #!/bin/bash
 VERSION="0.1"
 echo "Welcome to ROM Unzipper by LiteApplication"
-if (whoami != root)
-  then echo "You have to run this script as root. \n Try sudo ./1click"
-  exit 1
+quit() {
+  exit 0
+}
+echo  "Checking root access..."
+if [[ $EUID -ne 0 ]]; then
+   echo "    This script must be run as root" 1>&2
+   exit 1
+fi
 
 echo "Checking dependances..."
 if command -v python3 &>/dev/null; then
@@ -11,28 +16,28 @@ if command -v python3 &>/dev/null; then
 else
     echo "    Installing python3..."
     sudo sudo apt-get install python3 python -qq > /dev/null
-    echo "        Done."
 fi
 if command -v git &>/dev/null; then
     echo "    Git is installed"
 else
     echo "    Installing git..."
     sudo sudo apt-get install git -qq > /dev/null
-    echo "        Done."
 fi
 if command -v brotli &>/dev/null; then
     echo "    Brotli is installed"
 else
     echo "    Installing brotli..."
     sudo sudo apt-get install brotli -qq > /dev/null
-    echo "        Done."
 fi
 echo "Downloading program..."
 mkdir files
 cd files
 git clone https://github.com/LiteApplication/rom-unzip.git --quiet
-echo "    Done"
+echo "Moving program..."
+cd rom-unzip
+mv -R src/* ../
 cd ..
+rm -fr rom-unzip
 mkdir rom
 sudo python3 ./files/src/main.py
-exit 0
+quit
