@@ -30,7 +30,7 @@ def main(runDir="NoDir"):
         if ROM_FILES in zip.namelist():
             availableRom.append(zip)
     if len(availableRom)<= 2:
-        print("Multiple ROMs are available in this dirrectory : "
+        print("Multiple ROMs are available in this dirrectory : ")
         rom=chooseFile(availableRom)
     elif len(availablerom)==0:
         print("Error : No rom available\nPlease cd to the rom.zip directory or use "+sys.argv[0]+" <directory>")
