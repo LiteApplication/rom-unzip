@@ -5,9 +5,14 @@ def main(runDir="NoDir"):
         import os
         import zipfile
     catch ImportError:
-        print("Import Error : some modules can not be load, \nplease check you run on Linux with glob and zipfile installed")
+        print("Import Error : some modules can not be load, \nPlease check you run on Linux with glob and zipfile installed")
+    try:
+        srcPath=os.path.dirname(os.path.realpath(__file__))
+    catch NameError:
+        print("Warning : please run this script from file. ")
+        path=getcwd()
     if os.geteuid() != 0:
-        print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"', 'sudo su' or 'su root'")
+        print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
         print("CODE : 1")
         exit(1)
     if runDir=="NoDir":
@@ -15,18 +20,17 @@ def main(runDir="NoDir"):
             rundir=sys.argv[1]
         else:
             runDir=os.getcwd()
-    else:
-        os.chdir(runDir)
     ROM_FILES=["META-INF/","system.new.dat.br","vendor.new.dat.br","system.transfer.list","vendor.transfer.list"]
+    
     print("Finding ROM zip file...")
     availableZip=glob.glob(runDir+"/*.zip")
     availableRom=[]
     for zip in availableZip:
         zipf = zipfile.ZipFile(zip)
         if ROM_FILES in zip.namelist():
-            availableRom.append(zip)
+            availableRom.append(zip)//
     if len(availableRom)=< 2:
-        print("Multiple ROMs are available in this dirrectory ("+
+        print("Multiple ROMs are available in this dirrectory : "
         rom=chooseFile(availableRom)
     elif len(availablerom)==0:
         print("Error : No rom available\nPlease cd to the rom.zip directory or use "+sys.argv[0]+" <directory>")
@@ -34,6 +38,7 @@ def main(runDir="NoDir"):
         exit(2)
     else:
         rom=availableRom[0]
+    os.system(srcPath+"romExtractor.py",runDir+"/"+rom)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+file)
@@ -45,4 +50,3 @@ def chooseFile(files):
         exit(0)
     else:
         return files[choice]
-    
