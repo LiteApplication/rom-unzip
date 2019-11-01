@@ -11,23 +11,18 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo "Checking dependances..."
-if command -v python3 &>/dev/null; then
-    echo "    Python 3 is installed"
-else
+sudo apt-get update -qq >/dev/null 
+if ! command -v python3 &>/dev/null; then
     echo "    Installing python3..."
-    sudo sudo apt-get install python3 python -qq > /dev/null
+    sudo apt-get install python3 python -qq > /dev/null
 fi
-if command -v git &>/dev/null; then
-    echo "    Git is installed"
-else
+if ! command -v git &>/dev/null; then
     echo "    Installing git..."
-    sudo sudo apt-get install git -qq > /dev/null
+    sudo apt-get install git -qq > /dev/null
 fi
-if command -v brotli &>/dev/null; then
-    echo "    Brotli is installed"
-else
+if ! command -v brotli &>/dev/null; then
     echo "    Installing brotli..."
-    sudo sudo apt-get install brotli -qq > /dev/null
+    sudo apt-get install brotli -qq > /dev/null
 fi
 echo "Downloading program..."
 mkdir files
