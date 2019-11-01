@@ -29,7 +29,7 @@ def main(runDir="NoDir"):
         zipf = zipfile.ZipFile(zip)
         if ROM_FILES in zip.namelist():
             availableRom.append(zip)
-    if len(availableRom)=< 2:
+    if len(availableRom)<= 2:
         print("Multiple ROMs are available in this dirrectory : "
         rom=chooseFile(availableRom)
     elif len(availablerom)==0:
