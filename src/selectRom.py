@@ -4,11 +4,11 @@ def main(runDir="NoDir"):
         import glob
         import os
         import zipfile
-    catch ImportError:
+    except ImportError:
         print("Import Error : some modules can not be load, \nPlease check you run on Linux with glob and zipfile installed")
     try:
         srcPath=os.path.dirname(os.path.realpath(__file__))
-    catch NameError:
+    except NameError:
         print("Warning : please run this script from file. ")
         path=getcwd()
     if os.geteuid() != 0:
