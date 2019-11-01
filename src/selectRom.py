@@ -38,7 +38,7 @@ def main(runDir="NoDir"):
         exit(2)
     else:
         rom=availableRom[0]
-    os.system(srcPath+"romExtractor.sh", runDir+"/"+rom, srcPath)
+    os.system(srcPath+"/romExtractor.sh", runDir+"/"+rom, srcPath)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+file)
