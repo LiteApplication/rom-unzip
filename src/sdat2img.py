@@ -5,6 +5,7 @@
 #       AUTHORS: xpirt - luxi78 - howellzhu
 #          DATE: 2018-10-27 10:33:21 CEST
 #====================================================
+#file edited by LiteApplication
 
 from __future__ import print_function
 import sys, os, errno
@@ -19,8 +20,6 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         except NameError: pass
         input('Press ENTER to exit...')
         sys.exit(1)
-    else:
-        print('sdat2img binary - version: {}\n'.format(__version__))
 
     def rangeset(src):
         src_set = src.split(',')
@@ -67,17 +66,6 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     
     version, new_blocks, commands = parse_transfer_list_file(TRANSFER_LIST_FILE)
 
-    if version == 1:
-        print('Android Lollipop 5.0 detected!\n')
-    elif version == 2:
-        print('Android Lollipop 5.1 detected!\n')
-    elif version == 3:
-        print('Android Marshmallow 6.x detected!\n')
-    elif version == 4:
-        print('Android Nougat 7.x / Oreo 8.x detected!\n')
-    else:
-        print('Unknown Android version!\n')
-
     # Don't clobber existing files to avoid accidental data loss
     try:
         output_img = open(OUTPUT_IMAGE_FILE, 'wb')
@@ -92,14 +80,15 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     new_data_file = open(NEW_DATA_FILE, 'rb')
     all_block_sets = [i for command in commands for i in command[1]]
     max_file_size = max(pair[1] for pair in all_block_sets)*BLOCK_SIZE
-
-    for command in commands:
+    
+    for i,command in zip(range(1,len(commands)),commands):
+        percent=(i*100/)len(commands)
         if command[0] == 'new':
             for block in command[1]:
                 begin = block[0]
                 end = block[1]
                 block_count = end - begin
-                print('Copying {} blocks into position {}...'.format(block_count, begin))
+                print("Extracting "+OUTPUT_IMAGE_FILE+" : "+percent+"% complete.", end="\r")
 
                 # Position output file
                 output_img.seek(begin*BLOCK_SIZE)
@@ -108,8 +97,6 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
                 while(block_count > 0):
                     output_img.write(new_data_file.read(BLOCK_SIZE))
                     block_count -= 1
-        else:
-            print('Skipping command {}...'.format(command[0]))
 
     # Make file larger if necessary
     if(output_img.tell() < max_file_size):
@@ -117,7 +104,6 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
 
     output_img.close()
     new_data_file.close()
-    print('Done! Output image: {}'.format(os.path.realpath(output_img.name)))
 
 if __name__ == '__main__':
     try:
