@@ -34,5 +34,5 @@ mv src/* ../
 cd ..
 rm -fr rom-unzip
 mkdir rom
-sudo python3 ./files/main.py
+sudo python3 ./files/rom-checker.py
 quit
