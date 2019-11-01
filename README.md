@@ -4,7 +4,7 @@ Used to unzip an Android ROM to system and vendor
 - [x] Find the ROMs (not tested)
 - [x] Check if ROMs is valid (not tested)
 - [x] Select if needed (not tested)
-- [ ] Unzip the ROM
+- [x] Unzip the ROM
 - [ ] Extract system.new.dat.br
 - [ ] Extract vendor.new.dat.br
 - [ ] Convert system.new.dat into system.img
@@ -19,4 +19,3 @@ Used to unzip an Android ROM to system and vendor
 
 # Credits
 - [sdat2img](https://github.com/xpirt/sdat2img) by xpirt
-- [img2sdat](https://github.com/xpirt/img2sdat) by xpirt
