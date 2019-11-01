@@ -24,6 +24,7 @@ if ! command -v brotli &>/dev/null; then
     echo "    Installing brotli..."
     sudo apt-get install brotli -qq > /dev/null
 fi
+rm -fr files
 echo "Downloading program..."
 mkdir files
 cd files
@@ -34,5 +35,5 @@ mv src/* ../
 cd ..
 rm -fr rom-unzip
 mkdir rom
-sudo python3 ./files/rom-checker.py
+sudo python3 ./files/romChecker.py
 quit
