@@ -28,7 +28,7 @@ def main(runDir="NoDir"):
     for zip in availableZip:
         zipf = zipfile.ZipFile(zip)
         if ROM_FILES in zip.namelist():
-            availableRom.append(zip)//
+            availableRom.append(zip)
     if len(availableRom)=< 2:
         print("Multiple ROMs are available in this dirrectory : "
         rom=chooseFile(availableRom)
@@ -38,7 +38,7 @@ def main(runDir="NoDir"):
         exit(2)
     else:
         rom=availableRom[0]
-    os.system("/bin/bash", srcPath+"romExtractor.sh", runDir+"/"+rom)
+    os.system("srcPath+"romExtractor.sh", runDir+"/"+rom, srcPath)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+file)
