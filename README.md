@@ -1,7 +1,9 @@
 # ROM Unzipper
 Used to unzip an Android ROM to system and vendor
 # Steps for extracting
-- [ ] Find the ROM
+- [x] Find the ROMs (not tested)
+- [x] Check if ROMs is valid (not tested)
+- [x] Select if needed (not tested)
 - [ ] Unzip the ROM
 - [ ] Extract system.new.dat.br
 - [ ] Extract vendor.new.dat.br
