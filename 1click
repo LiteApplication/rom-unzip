@@ -1,6 +1,8 @@
 #!/bin/bash
 VERSION="0.1"
 echo "Welcome to ROM Unzipper by LiteApplication"
+ubin="/usr/bin"
+wd=$(pwd)
 quit() {
   exit 0
 }
@@ -35,5 +37,6 @@ mv src/* ../
 cd ..
 rm -fr rom-unzip
 mkdir rom
-sudo python3 ./files/selectRom.py
+cd $wd
+sudo $ubin/python3 selectRom.py
 quit
