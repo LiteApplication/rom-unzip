@@ -1,10 +1,6 @@
 #!/bin/bash
-VERSION="0.2"
-echo "Welcome to ROM Unzipper by LiteApplication "$VERSION
+echo "Welcome to ROM Unzipper by LiteApplication v0.3"
 wd=$(pwd)
-quit() {
-  exit 0
-}
 echo  "Checking root access..."
 if [[ $EUID -ne 0 ]]; then
    echo "    This script must be run as root" 1>&2
@@ -12,7 +8,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo "Checking dependances..."
-sudo apt-get update -qq >/dev/null 
 if ! command -v python3 &>/dev/null; then
     echo "    Installing python3..."
     sudo apt-get install python3 python -qq > /dev/null
@@ -30,14 +25,18 @@ echo "Downloading program..."
 mkdir files
 cd files
 git clone https://github.com/LiteApplication/rom-unzip.git --quiet
-echo "Moving program..."
+echo "Installing program..."
+mkdir -p /etc/liteapplication/rom-unzip
 cd rom-unzip
-mv src/* ../
+mv src/* /etc/liteapplication/rom-unzip/
 cd ..
-mv files/runz ./runz 
-echo "Adding python files to module list..."
+ln -s /etc/liteapplication/rom-unzip/ /bin/rom-unzip
+chmod 755 -R /etc/liteapplication/rom-unzip/
+chmod 755 /bin/rom-unzip
 cp files/*.py /usr/lib/python3/dist-packages
-rm -fr rom-unzip
 echo "Cleaning temporary files..."
-cd $wd
+rm -fr files
+rm $0
+echo "Install complete, use rom-unzip to start"
+rm $0
 exit 0
