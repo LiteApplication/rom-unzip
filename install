@@ -34,8 +34,10 @@ echo "Moving program..."
 cd rom-unzip
 mv src/* ../
 cd ..
+mv files/runz ./runz 
+echo "Adding python files to module list..."
+cp files/*.py /usr/lib/python3/dist-packages
 rm -fr rom-unzip
-mkdir rom
+echo "Cleaning temporary files..."
 cd $wd
-sudo python3 files/selectRom.py
-quit
+exit 0
