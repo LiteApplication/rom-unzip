@@ -1,2 +1,11 @@
 #!/usr/bin/python3
-
+import os
+import selectrom
+from termcolor import colored
+print("Welcome to ",colored("ROM-Unzip","blue"),"by LiteApplication")
+rompath=selectrom.select(os.getcwd())
+if rompath=="NOROM":
+    print(colored("E02 : NoromError, Please cd to the rom.zip folder","red"))
+    exit(1)
+if not os.path.isfile(rompath):
+    print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. "
