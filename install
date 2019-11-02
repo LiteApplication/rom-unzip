@@ -16,9 +16,9 @@ if ! command -v git &>/dev/null; then
     echo "    Installing git..."
     sudo apt-get install git -qq > /dev/null
 fi
-if ! command -v brotli &>/dev/null; then
-    echo "    Installing brotli..."
-    sudo apt-get install brotli -qq > /dev/null
+if ! dpkg -s | grep python3-brotli &>/dev/null; then
+    echo "    Installing python3-brotli..."
+    sudo apt-get install python3-brotli -qq > /dev/null
 fi
 rm -fr files
 echo "Downloading program..."
