@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-def main(runDir="NoDir"):
+def select(runDir="NoDir"):
     try:
         import glob
         import os
@@ -38,7 +38,7 @@ def main(runDir="NoDir"):
         exit(2)
     else:
         rom=availableRom[0]
-    os.system(srcPath+"/romExtractor.sh", runDir+"/"+rom, srcPath)
+    return rom
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+file)
