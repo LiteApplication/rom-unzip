@@ -1,3 +1,2 @@
-#!/bin/bash
-echo "Welcome to ROM-Unzipper v0.3"
-echo "We will search ROMs in " `pwd`
+#!/usr/bin/python3
+
