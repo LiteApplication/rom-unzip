@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-def select(runDir="NoDir"):
+def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
     try:
         import glob
         import os
@@ -21,16 +21,17 @@ def select(runDir="NoDir"):
         if ROM_FILES in zip.namelist():
             availableRom.append(zip)
     if len(availableRom)<= 2:
-        print("Multiple ROMs are available in this dirrectory : ")
+        print("Multiple ROMs are available in this directory : ")
         rom=chooseFile(availableRom)
     elif len(availablerom)==0:
-        print("Error : No rom available\nPlease cd to the rom.zip directory or use "+sys.argv[0]+" <directory>")
-        print("CODE : 2")
         return "NOROM"
     else:
         rom=availableRom[0]
         print(
     return rom
+def unzip(source,path):
+    print("Extracting rom files...")
+    zipfile.ZipFile(source, 'r').extractall(path)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+os.path.splitext(os.path.basename(file)))[0]
@@ -38,7 +39,6 @@ def chooseFile(files):
     choice = int(input("Your choice : "))-1
     if choice == -1:
         print("Exiting...")
-        print("CODE : 0")
         exit(0)
     else:
         return files[choice]
