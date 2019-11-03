@@ -34,7 +34,7 @@ mkdir -p /etc/liteapplication/rom-unzip
 cd rom-unzip
 mv src/* /etc/liteapplication/rom-unzip/
 cd ..
-ln -s /etc/liteapplication/rom-unzip/ /bin/rom-unzip
+ln -s /etc/liteapplication/rom-unzip/runz /bin/rom-unzip
 chmod 755 -R /etc/liteapplication/rom-unzip/
 chmod 755 /bin/rom-unzip
 cp files/*.py /usr/lib/python3/dist-packages
