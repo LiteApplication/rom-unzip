@@ -39,6 +39,7 @@ chmod 755 -R /etc/liteapplication/rom-unzip/
 chmod 755 /bin/rom-unzip
 cp files/*.py /usr/lib/python3/dist-packages
 echo "Cleaning temporary files..."
+cd ..
 rm -fr files
 rm $0
 echo "Install complete, use rom-unzip to start"
