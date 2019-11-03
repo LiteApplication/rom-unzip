@@ -3,7 +3,6 @@ try:
     import glob
     import os
     import zipfile
-    import bortli
 except ImportError:
     print("Import Error : some modules can not be load, \nDo you have installed this with ./install ?")
     exit(1)
@@ -29,13 +28,12 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
         return "NOROM"
     else:
         rom=availableRom[0]
-        print(
     return rom
 def unzip(source,path):
     print("Extracting rom files...")
     zipfile.ZipFile(source, 'r').extractall(path)
 def unbr(source,path):
-    
+    os.system("brotli","-d",source,"--out",path)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+i+" : "+os.path.splitext(os.path.basename(file)))[0]
