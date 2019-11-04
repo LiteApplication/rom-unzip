@@ -3,6 +3,7 @@ try:
     import glob
     import os
     import zipfile
+    import sys
 except ImportError:
     print("Import Error : some modules can not be load, \nDo you have installed this with ./install ?")
     exit(1)
