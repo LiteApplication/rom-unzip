@@ -24,11 +24,14 @@ if ! dpkg -s | grep python3-termcolor &>/dev/null; then
     echo "    Installing python3-termcolor..."
     sudo apt-get install python3-termcolor -qq > /dev/null
 fi
-rm -fr files
 echo "Downloading program..."
 mkdir files
 cd files
 git clone https://github.com/LiteApplication/rom-unzip.git --quiet
+echo "Removing old files..."
+rm -fr /bin/rom-unzip
+rm -fr /etc/liteapplication/rom-unzip
+
 echo "Installing program..."
 mkdir -p /etc/liteapplication/rom-unzip
 cd rom-unzip
