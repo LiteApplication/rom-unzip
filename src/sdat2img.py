@@ -10,7 +10,7 @@
 from __future__ import print_function
 import sys, os, errno
 
-def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
+def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     __version__ = '1.2'
 
     if sys.hexversion < 0x02070000:
@@ -124,6 +124,9 @@ if __name__ == '__main__':
     try:
         OUTPUT_IMAGE_FILE = str(sys.argv[3])
     except IndexError:
-        OUTPUT_IMAGE_FILE = 'system.img'
+        if "vendor" in NEW_DATA_FILE:
+            OUTPUT_IMAGE_FILE = 'vendor.img'
+        else:
+            OUTPUT_IMAGE_FILE = 'system.img'
 
-    main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)
+    extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)
