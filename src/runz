@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 import selectrom as sr
+import sdat2img
 from termcolor import colored
 print("Welcome to ",colored("ROM-Unzip","blue"),"by LiteApplication")
 rompath=sr.select(os.getcwd())
@@ -14,4 +15,6 @@ print("Extracting system.new.dat.br...")
 sr.unbr("system.new.dat.br","system.new.dat")
 print("Extracting vendor.new.dat.br...")
 sr.unbr("vendor.new.dat.br","vendor.new.dat")
-
+print("Removing useless files...")
+sdat2img.extract("system.new.dat","system.transfer.list","system.img")
+sdat2img.extract("vendor.new.dat","vendor.transfer.list","vendor.img")
