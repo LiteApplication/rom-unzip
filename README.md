@@ -1,7 +1,9 @@
 # ROM Unzipper
 Used to unzip an Android ROM to system and vendor
 # Usage
-
+To install the program , just run ./install , no need to download the entire repository, just download and run install.
+To extract a rom, cd to the rim folder and run rom-unzip.
+The extracting can take a long time, try to be patient
 # Developpement progress
 - [x] Find the ROMs
 - [x] Check if ROMs is valid
