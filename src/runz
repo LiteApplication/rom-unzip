@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 import os
-import selectrom as sr
+import romunzip as ru
 import sdat2img
 from termcolor import colored
+from pwd import getpwuid
+from grp import getgrgid
+import json
 print("Welcome to ",colored("ROM-Unzip","blue"),"by LiteApplication")
-rompath=sr.select(os.getcwd())
+rompath=ru.select(os.getcwd())
 if rompath=="NOROM":
     print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
     exit(1)
@@ -13,9 +16,9 @@ if not os.path.isfile(rompath):
     exit(1)
 os.chdir(glob.glob("rom-extracted"))
 print("Extracting system.new.dat.br...")
-sr.unbr("system.new.dat.br","system.new.dat")
+ru.unbr("system.new.dat.br","system.new.dat")
 print("Extracting vendor.new.dat.br...")
-sr.unbr("vendor.new.dat.br","vendor.new.dat")
+ru.unbr("vendor.new.dat.br","vendor.new.dat")
 print("Removing useless files...")
 sdat2img.extract("system.new.dat","system.transfer.list","system.img")
 sdat2img.extract("vendor.new.dat","vendor.transfer.list","vendor.img")
@@ -25,5 +28,15 @@ os.system("sudo mount -t ext4 -o loop system.img system.dir/")
 print("Mounting vendor.img ...")
 os.system("mkdir vendor.dir")
 os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
+print("Analysing system...")
+if os.path.exists("/SYSTEM_PERMISSIONS"):
+  os.remove("/SYSTEM_PERMISSIONS")
+permSystem=open("./SYSTEM_PERMISSIONS","a+")
+systemFilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
+permSystem.write("### Files and folders : " + systemFilesNb + " ###\n")
 print("Saving permissions for system...")
-for path in romExtractor
+lf=ru.listFiles("system.dir")
+for path,progress in zip(lf,range(1,systemFilesNb):
+    permsystem.write(json.dumps([path,oct(stat.st_mode)[-3:]),getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
+    print("Saving permissions for system... ("+progress+"/"+systemFilesNb+")",end="\r")
+
