@@ -45,3 +45,7 @@ def chooseFile(files):
         exit(0)
     else:
         return files[choice]
+def listFiles(rootdir):
+    for (cur,subdir,files) in os.walk('Test', topdown=true): 
+        for element in subdir+files:
+            yield cur + "/" + element
