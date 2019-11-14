@@ -1,12 +1,17 @@
 #!/usr/bin/python3
-import os
-import romunzip as ru
-import sdat2img
-from termcolor import colored
-from pwd import getpwuid
-from grp import getgrgid
-import json
-print("Welcome to ",colored("ROM-Unzip","blue"),"by LiteApplication")
+print("Welcome to ROM-Unzip by LiteApplication")
+try:
+    print("Importing python files...")
+    import os
+    import romunzip as ru
+    import sdat2img
+    from termcolor import colored
+    from pwd import getpwuid
+    from grp import getgrgid
+    import json
+except ImportError:
+    print("E05: ImportError")
+    exit(1)
 rompath=ru.select(os.getcwd())
 if rompath=="NOROM":
     print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
@@ -31,12 +36,25 @@ os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
 print("Analysing system...")
 if os.path.exists("/SYSTEM_PERMISSIONS"):
   os.remove("/SYSTEM_PERMISSIONS")
-permSystem=open("./SYSTEM_PERMISSIONS","a+")
-systemFilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
-permSystem.write("### Files and folders : " + systemFilesNb + " ###\n")
+permissions=open("./SYSTEM_PERMISSIONS","a+")
+FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
+permissions.write("### Files and folders : " + FilesNb + " ###\n")
 print("Saving permissions for system...")
 lf=ru.listFiles("system.dir")
-for path,progress in zip(lf,range(1,systemFilesNb):
-    permsystem.write(json.dumps([path,oct(stat.st_mode)[-3:]),getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
-    print("Saving permissions for system... ("+progress+"/"+systemFilesNb+")",end="\r")
+for path,progress in zip(lf,range(1,FilesNb):
+    permissions.write(json.dumps([path,oct(stat.st_mode)[-3:]),getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
+    print("Saving permissions for system... ("+progress+"/"+FilesNb+")",end="\r")
+permissions.close()
+print("Analysing vendor...")
+if os.path.exists("/VENDOR_PERMISSIONS"):
+  os.remove("/VENDOR_PERMISSIONS")
+permissions=open("./VENDOR_PERMISSIONS","a+")
+FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
+permissions.write("### Files and folders : " + FilesNb + " ###\n")
+print("Saving permissions for vendor...")
+lf=ru.listFiles("vendor.dir")
+for path,progress in zip(lf,range(1,FilesNb):
+    permissions.write(json.dumps([path,oct(stat.st_mode)[-3:]),getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
+    print("Saving permissions for vendor... ("+progress+"/"+FilesNb+")",end="\r")
+permissions.close()
 
