@@ -13,8 +13,8 @@ The extracting can take a long time, try to be patient
 - [x] Extract vendor.new.dat.br
 - [x] Convert system.new.dat into system.img
 - [x] Convert vendor.new.dat into vendor.img
-- [ ] Mount system.img
-- [ ] Save permissions for system.img
+- [x] Mount system.img
+- [x] Save permissions for system.img
 - [ ] Mount vendor.img
 - [ ] Save permissions for vendor.img
 - [ ] Copy system files to a folder
