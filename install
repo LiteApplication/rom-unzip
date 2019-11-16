@@ -45,6 +45,5 @@ echo "Cleaning temporary files..."
 cd ..
 rm -fr files
 echo "Install complete, use rom-unzip to start"
-rm $0
 exit 0
 
