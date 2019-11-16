@@ -1,10 +1,12 @@
 # ROM Unzipper
 Used to unzip an Android ROM to system and vendor
-# Usage
+## Installation
+Just run `curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash` to install ROM-Unzip
+## Usage
 To install the program , just run ./install , no need to download the entire repository, just download and run install.
 To extract a rom, cd to the rim folder and run rom-unzip.
 The extracting can take a long time, try to be patient
-# Developpement progress
+## Developpement progress
 - [x] Find the ROMs
 - [x] Check if ROMs is valid
 - [x] Select if needed
@@ -21,5 +23,5 @@ The extracting can take a long time, try to be patient
 - [ ] Copy vendor files to a folder
 - [ ] Removing permissions to allow RW on vendor and system
 
-# Credits
+## Credits
 - [sdat2img](https://github.com/xpirt/sdat2img) by xpirt
