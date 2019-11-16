@@ -1,5 +1,5 @@
 # ROM Unzipper
-Used to unzip an Android ROM to system and vendor
+Unzip an Android ROM to system and vendor
 ## Installation
 Just run `curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash` to install ROM-Unzip./
 If you want to download the file for run it later, install on multiple computer or read it from your computer, you can download it at [raw.github.com](https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install)
