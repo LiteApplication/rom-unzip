@@ -22,6 +22,7 @@ if rompath=="NOROM":
 if not os.path.isfile(rompath):
     print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
     exit(1)
+os.mkdir("rom-extracted")
 os.chdir(path("rom-extracted"))
 print("Extracting system.new.dat.br...")
 ru.unbr(path("system.new.dat.br"),path("system.new.dat"))
