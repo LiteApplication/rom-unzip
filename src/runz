@@ -23,15 +23,15 @@ if not os.path.isfile(rompath):
     print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
     exit(1)
 try:
-    os.mkdir("rom-extracted")
+    os.mkdir("rom-extracted",0o777)
 except FileExistsError:
     pass
 os.chdir(path("rom-extracted"))
 ru.unzip(path(rompath),path("."))
 print("Extracting system.new.dat.br...")
-ru.unbr(path("system.new.dat.br"),path("system.new.dat"))
+ru.unbr(path("system.new.dat.br"),"system.new.dat")
 print("Extracting vendor.new.dat.br...")
-ru.unbr(path("vendor.new.dat.br"),path("vendor.new.dat"))
+ru.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
 print("Removing useless files...")
 sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
 sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
