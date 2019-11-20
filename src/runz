@@ -9,6 +9,7 @@ try:
     from pwd import getpwuid
     from grp import getgrgid
     import json
+    import glob
 except ImportError:
     print("E05: ImportError")
     exit(1)
