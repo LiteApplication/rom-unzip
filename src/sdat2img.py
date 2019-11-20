@@ -82,7 +82,7 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     max_file_size = max(pair[1] for pair in all_block_sets)*BLOCK_SIZE
     
     for i,command in zip(range(1,len(commands)),commands):
-        percent=(i*100/)len(commands)
+        percent=i*100/len(commands)
         if command[0] == 'new':
             for block in command[1]:
                 begin = block[0]
