@@ -20,9 +20,12 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
     availableRom=[]
     for zipp in availableZip:
         zipf = zipfile.ZipFile(zipp)
+        add=False
         for file in ROM_FILES:
             if file in zipf.namelist():
-                availableRom.append(zipp)
+                add=True
+        if add:
+            availableRom.append(zipp)
     if len(availableRom)>= 2:
         print("Multiple ROMs are available in this directory : ")
         rom=chooseFile(availableRom)
