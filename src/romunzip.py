@@ -14,7 +14,7 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
         exit(1)
     if runDir=="NoDir":
         runDir=os.getcwd()
-    ROM_FILES=["META-INF/","system.new.dat.br","vendor.new.dat.br","system.transfer.list","vendor.transfer.list"]
+    ROM_FILES=["system.new.dat.br","vendor.new.dat.br","system.transfer.list","vendor.transfer.list"]
     print("Finding ROM zip file...")
     availableZip=glob.glob(runDir+"/*.zip")
     availableRom=[]
