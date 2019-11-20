@@ -38,7 +38,7 @@ def unbr(source,path):
     os.system("brotli","-d",source,"--out",path)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
-        print("\t"+i+" : "+os.path.splitext(os.path.basename(file)))[0]
+        print("\t"+str(i)+" : "+os.path.splitext(os.path.basename(file))[0])
     print("\n\t0 : Exit")
     choice = int(input("Your choice : "))-1
     if choice == -1:
