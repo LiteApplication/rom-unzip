@@ -25,7 +25,7 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
     if len(availableRom)>= 2:
         print("Multiple ROMs are available in this directory : ")
         rom=chooseFile(availableRom)
-    elif len(availablerom)==0:
+    elif len(availableRom)==0:
         return "NOROM"
     else:
         rom=availableRom[0]
