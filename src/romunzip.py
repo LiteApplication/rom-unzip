@@ -18,6 +18,7 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
     print("Finding ROM zip file...")
     availableZip=glob.glob(runDir+"/*.zip")
     availableRom=[]
+    print(availableZip)
     for zipp in availableZip:
         zipf = zipfile.ZipFile(zipp)
         if ROM_FILES in zipf.namelist():
