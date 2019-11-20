@@ -21,6 +21,7 @@ def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
     print(availableZip)
     for zipp in availableZip:
         zipf = zipfile.ZipFile(zipp)
+        print(zipf.namelist())
         if ROM_FILES in zipf.namelist():
             availableRom.append(zipp)
     if len(availableRom)>= 2:
