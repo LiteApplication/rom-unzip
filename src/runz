@@ -27,7 +27,7 @@ try:
 except FileExistsError:
     pass
 os.chdir(path("rom-extracted"))
-os.unzip(path(rompath),path("."))
+ru.unzip(path(rompath),path("."))
 print("Extracting system.new.dat.br...")
 ru.unbr(path("system.new.dat.br"),path("system.new.dat"))
 print("Extracting vendor.new.dat.br...")
