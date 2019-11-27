@@ -10,6 +10,7 @@ try:
     from grp import getgrgid
     import json
     import glob
+    import shutil
 except ImportError:
     print("E05: ImportError")
     exit(1)
@@ -25,6 +26,8 @@ if not os.path.isfile(rompath):
 try:
     os.mkdir("rom-extracted",0o777)
 except FileExistsError:
+    shutil.rmtree("/home/ismail/cache")
+    os.mkdir("rom-extracted",0o777)
     pass
 os.chdir(path("rom-extracted"))
 ru.unzip(path(rompath),path("."))
