@@ -38,7 +38,7 @@ def unzip(source,path):
     print("Extracting rom files...")
     zipfile.ZipFile(source, 'r').extractall(path)
 def unbr(source,path):
-    os.system(["brotli","-d",source,"--out",path])
+    os.system("brotli -d " + source + " --out " + path)
 def chooseFile(files):
     for i,file in zip(range(1,len(files)),files):
         print("\t"+str(i)+" : "+os.path.splitext(os.path.basename(file))[0])
