@@ -16,7 +16,7 @@ if ! command -v git &>/dev/null; then
     echo "    Installing git..."
     sudo apt-get install git -qq > /dev/null
 fi
-if ! dpkg -s | grep brotli &>/dev/null; then
+if ! command -v brotli &>/dev/null; then
     echo "    Installing brotli..."
     sudo apt-get install brotli -qq > /dev/null
 fi
