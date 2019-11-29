@@ -11,11 +11,13 @@ try:
     import json
     import glob
     import shutil
+    import argparse
 except ImportError:
     print("E05: ImportError")
     exit(1)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
+
 rompath=ru.select(path(os.getcwd()))
 if rompath=="NOROM":
     print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
