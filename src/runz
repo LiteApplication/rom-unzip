@@ -1,44 +1,57 @@
 #!/usr/bin/python3
-print("Welcome to ROM-Unzip by LiteApplication")
-try:
-    print("Importing python files...")
-    import os
-    import romunzip as ru
-    import sdat2img
-    from termcolor import colored
-    from pwd import getpwuid
-    from grp import getgrgid
-    import json
-    import glob
-    import shutil
-    import argparse
-except ImportError:
-    print("E05: ImportError")
-    exit(1)
-
+import argparse
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img")
-ap.add_argument("-p","--rom-path", type=str, help="The path to your rom.zip")
-ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting. ")
+ap.add_argument("-v","--version", action="store_true", help="Show the script version and exit")
+ap.add_argument("-V","--verbose", action="store_true", help="Verbosely run script")
+ap.add_argument("-l","--log", action="store_true", help="Save output to rom-unzip.log")
+ap.add_argument("-u","--update", action="store_true", help="Update program and exit")
+ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting")
+ap.add_argument("-p","--rom-path", type=str, default=".", help="The path to rom.zip folder")
 ap.add_argument("-m","--manual-step", type=str, help="Run only one step of rom-unzip")
 args = ap.parse_args()
+def show(message):
+    if args.verbose:
+        print(message)
+    if args.log:
+        with open("./rom-unzip-logs.txt","a") as f:
+            f.write(message)
+def import_modules(): 
+    try:
+        show("Importing python files...")
+        import os
+        import romunzip as ru
+        import sdat2img
+        from termcolor import colored
+        from pwd import getpwuid
+        from grp import getgrgid
+        import json
+        import glob
+        import shutil
+    except ImportError:
+        print("E05: ImportError")
+        exit(1)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
+def select_rom(romdir):
+    rompath=ru.select(path(romdir))
+    if rompath=="NOROM":
+        print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
+        exit(1)
+    if not os.path.isfile(rompath):
+        print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
+        exit(1)
+    return rompath
+def create_dir():
+    try:
+        os.mkdir("rom-extracted",0o777)
+    except FileExistsError:
+        shutil.rmtree("rom-extracted")
+        os.mkdir("rom-extracted",0o777)
+        pass
+    os.chdir(path("rom-extracted"))
+def unzip_rom(rompath):
+    ru.unzip(path(rompath),path("."))
 
-rompath=ru.select(path(os.getcwd()))
-if rompath=="NOROM":
-    print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
-    exit(1)
-if not os.path.isfile(rompath):
-    print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
-    exit(1)
-try:
-    os.mkdir("rom-extracted",0o777)
-except FileExistsError:
-    shutil.rmtree("rom-extracted")
-    os.mkdir("rom-extracted",0o777)
-    pass
-os.chdir(path("rom-extracted"))
-ru.unzip(path(rompath),path("."))
 print("Extracting system.new.dat.br...")
 ru.unbr(path("system.new.dat.br"),"system.new.dat")
 print("Extracting vendor.new.dat.br...")
