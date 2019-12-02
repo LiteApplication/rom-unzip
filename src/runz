@@ -33,7 +33,7 @@ class rom_unzip:
         self.save_state(7, EXTRACT_DIR)
         self.copy_img()
         self.save_state(8, EXTRACT_DIR)
-    def run_step(n):
+    def run_step(self,n):
         steps = {
             0 : show_steps,
             1 : import_modules,
@@ -49,7 +49,7 @@ class rom_unzip:
             steps[n]()
         else:
             steps[n](args.OPTION)
-    def import_modules():
+    def import_modules(self):
         try:
             show("Importing python files...")
             import os
@@ -64,7 +64,7 @@ class rom_unzip:
         except ImportError:
             print("E05: ImportError")
             exit(1)
-    def select_rom(romdir):
+    def select_rom(self, romdir):
         rompath=tb.select(path(romdir))
         if rompath=="NOROM":
             print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
@@ -73,7 +73,7 @@ class rom_unzip:
             print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
             exit(1)
         return rompath
-    def create_dir(extract):
+    def create_dir(self, extract):
         try:
             os.mkdir(extract,0o777)
         except FileExistsError:
@@ -81,17 +81,17 @@ class rom_unzip:
             os.mkdir(extract,0o777)
             pass
         os.chdir(path(extract))
-    def unzip_rom(rompath):
+    def unzip_rom(self, rompath):
         tb.unzip(path(rompath),path("."))
-    def unzip_brotli():
+    def unzip_brotli(self):
         show("Extracting system.new.dat.br...")
         tb.unbr(path("system.new.dat.br"),"system.new.dat")
         show("Extracting vendor.new.dat.br...")
         tb.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
-    def extract_dat():
+    def extract_dat(self):
         sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
         sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
-    def save_img():
+    def save_img(self):
         show("Mounting system.img ...")
         os.system("mkdir system.dir")
         os.system("sudo mount -t ext4 -o loop system.img system.dir/")
@@ -122,17 +122,17 @@ class rom_unzip:
         for path,progress in zip(lf,range(1,FilesNb)):
             permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
         permissions.close()
-    def copy_img():
+    def copy_img(self):
         os.mkdir("system.rw")
         os.mkdir("vendor.rw")
         show("Copying files to system.rw")
         os.system("cp -R system.dir/* system.rw/")
         show("Copying files to vendor.rw")
         os.system("cp -R vendor.dir/* vendor.rw/")
-    def set_state(state, dest):
+    def set_state(self, state, dest):
         with open(dest+"/.state.save","w") as f:
             f.write(str(state))
-    def get_state(dest):
+    def get_state(self, dest):
         with open(dest+"/.state.save","r+") as f:
             return str(f.readline())
 
