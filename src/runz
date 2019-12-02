@@ -16,7 +16,7 @@ ap.add_argument("-e","--extract-dir", type=str, default="rom-extracted", help="P
 
 args = ap.parse_args()
 
-class rom_unzip():
+class rom_unzip(self):
     __version__ = 0.6
     def run_all(self):
         self.import_modules()
