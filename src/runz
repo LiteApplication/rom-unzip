@@ -1,98 +1,160 @@
 #!/usr/bin/python3
 import argparse
-ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img")
-ap.add_argument("-v","--version", action="store_true", help="Show the script version and exit")
-ap.add_argument("-V","--verbose", action="store_true", help="Verbosely run script")
-ap.add_argument("-l","--log", action="store_true", help="Save output to rom-unzip.log")
-ap.add_argument("-u","--update", action="store_true", help="Update program and exit")
-ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting")
-ap.add_argument("-p","--rom-path", type=str, default=".", help="The path to rom.zip folder")
-ap.add_argument("-m","--manual-step", type=str, help="Run only one step of rom-unzip")
+ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
+ap.add_argument("-v","--version", action="store_true", help="Show the script version and exit. ")
+ap.add_argument("-V","--verbose", action="store_true", help="Verbosely run script. ")
+ap.add_argument("-l","--log", action="store_true", help="Save output to rom-unzip.log. ")
+ap.add_argument("-a","--all", action="store_true", help="Run all steps, enabled by default. ")
+ap.add_argument("-u","--update", action="store_true", help="Update program and exit. ")
+ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting. ")
+ap.add_argument("-s","--show-saved", action="store_true", help="Show the actual saved state and exit. ")
+ap.add_argument("-p","--rom-path", type=str, default=".", help="The path to rom.zip folder. ")
+ap.add_argument("-m","--step", type=int, default="-1", help="Run only one step of rom-unzip. Pass 0 to view options. ")
+ap.add_argument("-o","--option", type=str, default="", help="Argument for single step.")
+ap.add_argument("-e","--extract-dir", type=str, default="rom-extracted", help="Path to extract rom. ")
+
+
 args = ap.parse_args()
+
+class rom_unzip():
+    __version__ = 0.6
+    def run_all(self):
+        self.import_modules()
+        rom = self.select_rom(ROM_PATH)
+        self.create_dir(EXTRACT_DIR)
+        self.save_state(3, EXTRACT_DIR)
+        self.unzip_rom(rom)
+        self.save_state(4, EXTRACT_DIR)
+        self.unzip_broti()
+        self.save_state(5, EXTRACT_DIR)
+        self.extract_dat()
+        self.save_state(6, EXTRACT_DIR)
+        self.save_img()
+        self.save_state(7, EXTRACT_DIR)
+        self.copy_img()
+        self.save_state(8, EXTRACT_DIR)
+    def run_step(n):
+        steps = {
+            0 : show_steps,
+            1 : import_modules,
+            2 : select_rom,
+            3 : create_dir,
+            4 : unzip_rom,
+            5 : unzip_brotli,
+            6 : extract_dat,
+            7 : save_img,
+            8 : copy_img
+        }
+        if args.OPTION == "":
+            steps[n]()
+        else:
+            steps[n](args.OPTION)
+    def import_modules():
+        try:
+            show("Importing python files...")
+            import os
+            import romunzip as ru
+            import sdat2img
+            from termcolor import colored
+            from pwd import getpwuid
+            from grp import getgrgid
+            import json
+            import glob
+            import shutil
+        except ImportError:
+            print("E05: ImportError")
+            exit(1)
+    def select_rom(romdir):
+        rompath=ru.select(path(romdir))
+        if rompath=="NOROM":
+            print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
+            exit(1)
+        if not os.path.isfile(rompath):
+            print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
+            exit(1)
+        return rompath
+    def create_dir(extract):
+        try:
+            os.mkdir(extract,0o777)
+        except FileExistsError:
+            shutil.rmtree(extract)
+            os.mkdir(extract,0o777)
+            pass
+        os.chdir(path(extract))
+    def unzip_rom(rompath):
+        ru.unzip(path(rompath),path("."))
+    def unzip_brotli():
+        show("Extracting system.new.dat.br...")
+        ru.unbr(path("system.new.dat.br"),"system.new.dat")
+        show("Extracting vendor.new.dat.br...")
+        ru.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
+    def extract_dat():
+        sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
+        sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
+    def save_img():
+        show("Mounting system.img ...")
+        os.system("mkdir system.dir")
+        os.system("sudo mount -t ext4 -o loop system.img system.dir/")
+        show("Mounting vendor.img ...")
+        os.system("mkdir vendor.dir")
+        os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
+        show("Analysing system...")
+        if os.path.exists("/SYSTEM_PERMISSIONS"):
+            os.remove(path("/SYSTEM_PERMISSIONS"))
+        permissions=open("./SYSTEM_PERMISSIONS","a+")
+        FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
+        permissions.write("### Files and folders : " + FilesNb + " ###\n")
+        show("Saving permissions for system...")
+        lf=ru.listFiles(path("system.dir"))
+        show("Saving permissions for system...")
+        for path,progress in zip(lf,range(1,FilesNb)):
+            permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
+        permissions.close()
+        show("Analysing vendor...")
+        if os.path.exists("/VENDOR_PERMISSIONS"):
+            os.remove(path("/VENDOR_PERMISSIONS"))
+        permissions=open("./VENDOR_PERMISSIONS","a+")
+        FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
+        permissions.write("### Files and folders : " + FilesNb + " ###\n")
+        show("Saving permissions for vendor...")
+        lf=ru.listFiles(path("vendor.dir"))
+        show("Saving permissions for vendor...")
+        for path,progress in zip(lf,range(1,FilesNb)):
+            permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
+        permissions.close()
+    def copy_img():
+        os.mkdir("system.rw")
+        os.mkdir("vendor.rw")
+        show("Copying files to system.rw")
+        os.system("cp -R system.dir/* system.rw/")
+        show("Copying files to vendor.rw")
+        os.system("cp -R vendor.dir/* vendor.rw/")
+    def set_state(state, dest):
+        with open(dest+"/.state.save","w") as f:
+            f.write(str(state))
+    def get_state(dest):
+        with open(dest+"/.state.save","r+") as f:
+            return str(f.readline())
+
 def show(message):
     if args.verbose:
         print(message)
     if args.log:
         with open("./rom-unzip-logs.txt","a") as f:
             f.write(message)
-def import_modules(): 
-    try:
-        show("Importing python files...")
-        import os
-        import romunzip as ru
-        import sdat2img
-        from termcolor import colored
-        from pwd import getpwuid
-        from grp import getgrgid
-        import json
-        import glob
-        import shutil
-    except ImportError:
-        print("E05: ImportError")
-        exit(1)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
-def select_rom(romdir):
-    rompath=ru.select(path(romdir))
-    if rompath=="NOROM":
-        print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
-        exit(1)
-    if not os.path.isfile(rompath):
-        print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
-        exit(1)
-    return rompath
-def create_dir():
-    try:
-        os.mkdir("rom-extracted",0o777)
-    except FileExistsError:
-        shutil.rmtree("rom-extracted")
-        os.mkdir("rom-extracted",0o777)
-        pass
-    os.chdir(path("rom-extracted"))
-def unzip_rom(rompath):
-    ru.unzip(path(rompath),path("."))
 
-print("Extracting system.new.dat.br...")
-ru.unbr(path("system.new.dat.br"),"system.new.dat")
-print("Extracting vendor.new.dat.br...")
-ru.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
-print("Removing useless files...")
-sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
-sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
-print("Mounting system.img ...")
-os.system("mkdir system.dir")
-os.system("sudo mount -t ext4 -o loop system.img system.dir/")
-print("Mounting vendor.img ...")
-os.system("mkdir vendor.dir")
-os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
-print("Analysing system...")
-if os.path.exists("/SYSTEM_PERMISSIONS"):
-  os.remove(path("/SYSTEM_PERMISSIONS"))
-permissions=open("./SYSTEM_PERMISSIONS","a+")
-FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
-permissions.write("### Files and folders : " + FilesNb + " ###\n")
-print("Saving permissions for system...")
-lf=ru.listFiles(path("system.dir"))
-for path,progress in zip(lf,range(1,FilesNb)):
-    permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
-    print("Saving permissions for system... ("+progress+"/"+FilesNb+")",end="\r")
-permissions.close()
-print("Analysing vendor...")
-if os.path.exists("/VENDOR_PERMISSIONS"):
-  os.remove(path("/VENDOR_PERMISSIONS"))
-permissions=open("./VENDOR_PERMISSIONS","a+")
-FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
-permissions.write("### Files and folders : " + FilesNb + " ###\n")
-print("Saving permissions for vendor...")
-lf=ru.listFiles(path("vendor.dir"))
-for path,progress in zip(lf,range(1,FilesNb)):
-    permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
-    print("Saving permissions for vendor... ("+progress+"/"+FilesNb+")",end="\r")
-permissions.close()
-os.mkdir("system.rw")
-os.mkdir("vendor.rw")
-print("Copying files to system.rw")
-os.system("cp -R system.dir/* system.rw/")
-print("Copying files to vendor.rw")
-os.system("cp -R vendor.dir/* vendor.rw/")
-
+if args.version:
+    print("Rom-unzip by LiteApplication verion " + rom_unzip.__version__)
+    exit(0)
+elif args.all
+elif args.update:
+    from os import system
+    os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
+    exit(0)
+elif int(args.STEP) == -1 and int(args.STEP) >= 9:
+    run_step(args.STEP)
+elif int(args.STEP) > -1 and int(args.STEP) < 9:
+    run_all()
+elif 
