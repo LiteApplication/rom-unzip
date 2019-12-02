@@ -16,23 +16,23 @@ ap.add_argument("-e","--extract-dir", type=str, default="rom-extracted", help="P
 
 args = ap.parse_args()
 
-class rom_unzip():
+class rom_unzip:
     __version__ = 0.6
-    def run_all():
-        import_modules()
+    def run_all(self):
+        self.import_modules()
         rom = self.select_rom(ROM_PATH)
-        create_dir(EXTRACT_DIR)
-        save_state(3, EXTRACT_DIR)
-        unzip_rom(rom)
-        save_state(4, EXTRACT_DIR)
-        unzip_broti()
-        save_state(5, EXTRACT_DIR)
-        extract_dat()
-        save_state(6, EXTRACT_DIR)
-        save_img()
-        save_state(7, EXTRACT_DIR)
-        copy_img()
-        save_state(8, EXTRACT_DIR)
+        self.create_dir(EXTRACT_DIR)
+        self.save_state(3, EXTRACT_DIR)
+        self.unzip_rom(rom)
+        self.save_state(4, EXTRACT_DIR)
+        self.unzip_broti()
+        self.save_state(5, EXTRACT_DIR)
+        self.extract_dat()
+        self.save_state(6, EXTRACT_DIR)
+        self.save_img()
+        self.save_state(7, EXTRACT_DIR)
+        self.copy_img()
+        self.save_state(8, EXTRACT_DIR)
     def run_step(n):
         steps = {
             0 : show_steps,
@@ -53,7 +53,7 @@ class rom_unzip():
         try:
             show("Importing python files...")
             import os
-            import romunzip as ru
+            import romunzip as tb
             import sdat2img
             from termcolor import colored
             from pwd import getpwuid
@@ -65,7 +65,7 @@ class rom_unzip():
             print("E05: ImportError")
             exit(1)
     def select_rom(romdir):
-        rompath=ru.select(path(romdir))
+        rompath=tb.select(path(romdir))
         if rompath=="NOROM":
             print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
             exit(1)
@@ -82,12 +82,12 @@ class rom_unzip():
             pass
         os.chdir(path(extract))
     def unzip_rom(rompath):
-        ru.unzip(path(rompath),path("."))
+        tb.unzip(path(rompath),path("."))
     def unzip_brotli():
         show("Extracting system.new.dat.br...")
-        ru.unbr(path("system.new.dat.br"),"system.new.dat")
+        tb.unbr(path("system.new.dat.br"),"system.new.dat")
         show("Extracting vendor.new.dat.br...")
-        ru.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
+        tb.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
     def extract_dat():
         sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
         sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
@@ -105,7 +105,7 @@ class rom_unzip():
         FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
         permissions.write("### Files and folders : " + FilesNb + " ###\n")
         show("Saving permissions for system...")
-        lf=ru.listFiles(path("system.dir"))
+        lf=tb.listFiles(path("system.dir"))
         show("Saving permissions for system...")
         for path,progress in zip(lf,range(1,FilesNb)):
             permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
@@ -117,7 +117,7 @@ class rom_unzip():
         FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
         permissions.write("### Files and folders : " + FilesNb + " ###\n")
         show("Saving permissions for vendor...")
-        lf=ru.listFiles(path("vendor.dir"))
+        lf=tb.listFiles(path("vendor.dir"))
         show("Saving permissions for vendor...")
         for path,progress in zip(lf,range(1,FilesNb)):
             permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
@@ -144,18 +144,18 @@ def show(message):
             f.write(message)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
-
+ru = rom_unzip()
 if args.version:
     print("Rom-unzip by LiteApplication verion " + rom_unzip.__version__)
     exit(0)
 elif args.all:
-    rom_unzip.run_all()
+    ru.run_all()
 elif args.update:
     from os import system
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
 elif int(args.STEP) == -1 and int(args.STEP) >= 9:
-    rom_unzip.run_step(args.STEP)
+    ru.run_step(args.STEP)
 elif int(args.STEP) > -1 and int(args.STEP) < 9:
-    rom_unzip.run_all()
+    ru.run_all()
 
