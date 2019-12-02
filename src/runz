@@ -16,23 +16,23 @@ ap.add_argument("-e","--extract-dir", type=str, default="rom-extracted", help="P
 
 args = ap.parse_args()
 
-class rom_unzip(self):
+class rom_unzip():
     __version__ = 0.6
-    def run_all(self):
-        self.import_modules()
+    def run_all():
+        import_modules()
         rom = self.select_rom(ROM_PATH)
-        self.create_dir(EXTRACT_DIR)
-        self.save_state(3, EXTRACT_DIR)
-        self.unzip_rom(rom)
-        self.save_state(4, EXTRACT_DIR)
-        self.unzip_broti()
-        self.save_state(5, EXTRACT_DIR)
-        self.extract_dat()
-        self.save_state(6, EXTRACT_DIR)
-        self.save_img()
-        self.save_state(7, EXTRACT_DIR)
-        self.copy_img()
-        self.save_state(8, EXTRACT_DIR)
+        create_dir(EXTRACT_DIR)
+        save_state(3, EXTRACT_DIR)
+        unzip_rom(rom)
+        save_state(4, EXTRACT_DIR)
+        unzip_broti()
+        save_state(5, EXTRACT_DIR)
+        extract_dat()
+        save_state(6, EXTRACT_DIR)
+        save_img()
+        save_state(7, EXTRACT_DIR)
+        copy_img()
+        save_state(8, EXTRACT_DIR)
     def run_step(n):
         steps = {
             0 : show_steps,
