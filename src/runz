@@ -149,13 +149,13 @@ if args.version:
     print("Rom-unzip by LiteApplication verion " + rom_unzip.__version__)
     exit(0)
 elif args.all:
-    run_all()
+    rom_unzip.run_all()
 elif args.update:
     from os import system
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
 elif int(args.STEP) == -1 and int(args.STEP) >= 9:
-    run_step(args.STEP)
+    rom_unzip.run_step(args.STEP)
 elif int(args.STEP) > -1 and int(args.STEP) < 9:
-    run_all()
+    rom_unzip.run_all()
 
