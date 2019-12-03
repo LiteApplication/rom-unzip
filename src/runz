@@ -197,7 +197,7 @@ def path(s):
     return os.path.abspath(glob.glob(s)[0])
 ru = rom_unzip()
 if args.version:
-    print("Rom-unzip by LiteApplication verion " + rom_unzip.__version__)
+    print("Rom-unzip by LiteApplication verion " + str(rom_unzip.__version__))
     exit(0)
 elif args.all:
     ru.run_all()
