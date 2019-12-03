@@ -11,6 +11,8 @@ import glob
 import shutil
 import sys
 import zipfile
+from datetime import datetime
+
 #Argument parser
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
 ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
@@ -177,7 +179,7 @@ class rom_unzip:
             os.remove(path("/SYSTEM_PERMISSIONS"))
         permissions=open("./SYSTEM_PERMISSIONS","a+")
         FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
-        permissions.write("### Files and folders : " + FilesNb + " ###\n")
+        permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
         show("Saving permissions for system...")
         lf=tb.listFiles(path("system.dir"))
         show("Saving permissions for system...")
@@ -189,7 +191,7 @@ class rom_unzip:
             os.remove(path("/VENDOR_PERMISSIONS"))
         permissions=open("./VENDOR_PERMISSIONS","a+")
         FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
-        permissions.write("### Files and folders : " + FilesNb + " ###\n")
+        permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
         show("Saving permissions for vendor...")
         lf=tb.listFiles(path("vendor.dir"))
         show("Saving permissions for vendor...")
@@ -213,11 +215,19 @@ class rom_unzip:
             return str(f.readline())
 
 def show(message):
+    now = datetime.now()
+    message = "[ " + now.strftime("%d/%m %H:%M:%S") + " ] MEM : "+ mem() + " MB : " + message
     if args.verbose:
         print(message)
     if args.log:
         with open("./rom-unzip-logs.txt","a") as f:
             f.write(message+" \r\n")
+def mem():
+    # return the memory usage in MB
+    import psutil
+    process = psutil.Process(os.getpid())
+    mem = process.get_memory_info()[0] / float(2 ** 20)
+    return str(mem)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
 if os.geteuid() != 0:
