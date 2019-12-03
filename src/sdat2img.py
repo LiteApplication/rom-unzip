@@ -31,7 +31,7 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         return tuple ([ (num_set[i], num_set[i+1]) for i in range(1, len(num_set), 2) ])
 
     def parse_transfer_list_file(path):
-        trans_list = open(TRANSFER_LIST_FILE, 'r', encoding="utf_8")
+        trans_list = open(TRANSFER_LIST_FILE, 'rb')
 
         # First line in transfer list is the version number
         next(trans_list)
