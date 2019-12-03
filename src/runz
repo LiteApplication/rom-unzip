@@ -231,7 +231,7 @@ try:
     show("Version   : " + str(args.version))
     show("Resume    : " + str(args.resume))
     show("Update    : " + str(args.update))
-    show("Saved     : " + str(args.show_saved))
+    show("Saved     : " + str(args.saved))
     show("Option    : " + str(args.opt))
     show("Rom path  : " + str(args.path))
     show("Extract   : " + str(args.extract))
