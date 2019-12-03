@@ -12,7 +12,7 @@ if ! command -v python3 &>/dev/null; then
     echo "    Installing python3... Please wait, it may take a while"
     sudo apt-get install python3 python -qq > /dev/null
 fi
-if ! command -v psutil &>/dev/null; then
+if ! dpkg --list | grep " python3-psutil" &>/dev/null; then
     echo "    Installing psutil... Please wait, it may take a while"
     sudo apt-get install python3-psutil -qq > /dev/null
 fi
