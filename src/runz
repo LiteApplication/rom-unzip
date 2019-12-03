@@ -99,10 +99,14 @@ class rom_unzip:
         self.set_state(5, ".")
         self.extract_dat()
         self.set_state(6, ".")
-        self.save_img()
-        self.set_state(7, ".")
-        self.copy_img()
-        self.set_state(8, ".")
+        try:
+            self.save_img()
+            self.set_state(7, ".")
+            self.copy_img()
+            self.set_state(8, ".")
+        except:
+            os.system("sudo umount system.dir")
+            os.system("sudo umount vendor.dir")
     def resume():
         i = get_state(args.extract)
         if i<4:
