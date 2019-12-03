@@ -1,3 +1,0 @@
-#!/bin/bash 
-echo "Upadting ..."
-curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash
