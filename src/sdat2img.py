@@ -34,8 +34,10 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         trans_list = open(TRANSFER_LIST_FILE, 'r')
 
         # First line in transfer list is the version number
-        next(trans_list)
-
+        try:
+            next(trans_list)
+        except:
+            pass
         # Second line in transfer list is the total number of blocks we expect to write
         new_blocks = int(trans_list.readline())
         # Third line is how many stash entries are needed simultaneously
