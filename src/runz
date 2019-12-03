@@ -205,8 +205,8 @@ elif args.update:
     from os import system
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
-elif int(STEP) == -1 and int(STEP) >= 9:
-    ru.run_step(STEP)
-elif int(STEP) > -1 and int(STEP) < 9:
+elif int(step) == -1 and int(step) >= 9:
+    ru.run_step(step)
+elif int(step) > -1 and int(step) < 9:
     ru.run_all()
 
