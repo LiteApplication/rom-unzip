@@ -34,16 +34,14 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         trans_list = open(TRANSFER_LIST_FILE, 'r')
 
         # First line in transfer list is the version number
-        version = int(trans_list.readline())
+        trans_list.readline()
 
         # Second line in transfer list is the total number of blocks we expect to write
         new_blocks = int(trans_list.readline())
-
-        if version >= 2:
-            # Third line is how many stash entries are needed simultaneously
-            trans_list.readline()
-            # Fourth line is the maximum number of blocks that will be stashed simultaneously
-            trans_list.readline()
+        # Third line is how many stash entries are needed simultaneously
+        trans_list.readline()
+        # Fourth line is the maximum number of blocks that will be stashed simultaneously
+        trans_list.readline()
 
         # Subsequent lines are all individual transfer commands
         commands = []
@@ -60,11 +58,11 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
                     sys.exit(1)
 
         trans_list.close()
-        return version, new_blocks, commands
+        return new_blocks, commands
 
     BLOCK_SIZE = 4096
     
-    version, new_blocks, commands = parse_transfer_list_file(TRANSFER_LIST_FILE)
+    new_blocks, commands = parse_transfer_list_file(TRANSFER_LIST_FILE)
 
     # Don't clobber existing files to avoid accidental data loss
     try:
