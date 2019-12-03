@@ -160,7 +160,7 @@ class rom_unzip:
     def extract_dat(self):
         show("Extracting system.img ...")
         o=""
-        if arg.log:
+        if args.log:
             o = " -d ./rom-unzip-logs.txt"
         os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("system.new.dat") + " " + path("system.transfer.list.new") + " system.img" + o)
         show("Extracting vendor.img ...")
