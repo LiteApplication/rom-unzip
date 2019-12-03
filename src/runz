@@ -247,6 +247,8 @@ try:
         ru.run_step(args.step)
     elif int(args.step) <= -1 and int(args.step) > 9:
         ru.run_all()
+    elif args.saved:
+        print(ru.get_state())
     elif args.all:
         ru.run_all()
 except KeyboardInterrupt:
