@@ -166,7 +166,7 @@ class rom_unzip:
         target.write(unicode(source.read(), sourceEncoding).encode(targetEncoding))
         source.close()
         target.close()
-        sdat2img.extract(path("system.new.dat"),path("system.transfer.list.new"),"system.img")4
+        sdat2img.extract(path("system.new.dat"),path("system.transfer.list.new"),"system.img")
         source = open("vendor.transfer.list")
         target = open("vendor.transfer.list.new", "w")
         target.write(unicode(source.read(), sourceEncoding).encode(targetEncoding))
