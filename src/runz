@@ -217,6 +217,8 @@ class rom_unzip:
         os.system("cp -R system.dir/* system.rw/")
         show("Copying files to vendor.rw")
         os.system("cp -R vendor.dir/* vendor.rw/")
+        os.system("sudo chmod  777 -R *")
+        os.system("sudo umount system.dir && sudo umount vendor.dir")
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
