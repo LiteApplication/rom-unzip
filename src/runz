@@ -81,7 +81,7 @@ class rom_toolbox:
         else:
             return files[choice]
     def listFiles(self, rootdir):
-        for (cur,subdir,files) in os.walk('Test', topdown=true): 
+        for (cur,subdir,files) in os.walk('Test', topdown=True): 
             for element in subdir+files:
                 yield cur + "/" + element
 
