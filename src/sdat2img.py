@@ -31,13 +31,10 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         return tuple ([ (num_set[i], num_set[i+1]) for i in range(1, len(num_set), 2) ])
 
     def parse_transfer_list_file(path):
-        trans_list = open(TRANSFER_LIST_FILE, 'r')
+        trans_list = open(TRANSFER_LIST_FILE, 'r', encoding="utf8")
 
         # First line in transfer list is the version number
-        try:
-            next(trans_list)
-        except:
-            pass
+        next(trans_list)
         # Second line in transfer list is the total number of blocks we expect to write
         new_blocks = int(trans_list.readline())
         # Third line is how many stash entries are needed simultaneously
