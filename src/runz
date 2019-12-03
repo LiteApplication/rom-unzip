@@ -30,11 +30,13 @@ args = ap.parse_args()
 
 class rom_toolbox:
     __doc__ = """This class is a toolbox for rom_unzip\n"""
-    def select(self, unDir="NoDir"): #return a rom zip (absolute path) from runDir
+    def select(self, runDir="NoDir"): #return a rom zip (absolute path) from runDir
+        show("Start rom_toolbox.select()")
         if runDir=="NoDir":
             runDir=os.getcwd()
+            show("No command, selecting cwd")
         ROM_FILES=['system.new.dat.br','vendor.new.dat.br','system.transfer.list','vendor.transfer.list']
-        print("Finding ROM zip file...")
+        show("Finding ROM zip file...")
         availableZip=glob.glob(runDir+"/*.zip")
         availableRom=[]
         for zipp in availableZip:
@@ -48,7 +50,7 @@ class rom_toolbox:
         if len(availableRom)>= 2:
             print("Multiple ROMs are available in this directory : ")
             rom=chooseFile(availableRom)
-        elif len(availableRom)==0:
+        elif availableRom==[]:
             return "NOROM"
         else:
             rom=availableRom[0]
