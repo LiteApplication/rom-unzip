@@ -206,6 +206,18 @@ if os.geteuid() != 0:
     print("CODE : 1")
     exit(1)
 try:
+    show("Rom-unzip by LiteApplication verion " + str(rom_unzip.__version__))
+    show("Step      : " + str(args.step))
+    show("Log       : " + str(args.log))
+    show("Verbose   : " + str(args.verbose))
+    show("All       : " + str(args.all))
+    show("Version   : " + str(args.version))
+    show("Resume    : " + str(args.resume))
+    show("Update    : " + str(args.update))
+    show("Saved     : " + str(args.show_saved))
+    show("Option    : " + str(args.opt))
+    show("Rom path  : " + str(args.path))
+    show("Extract   : " + str(args.exract))
     ru = rom_unzip()
     tb = rom_toolbox()
     if args.version:
