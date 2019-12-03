@@ -124,10 +124,10 @@ class rom_unzip:
             7 : self.save_img,
             8 : self.copy_img
         }
-        if args.OPTION == "":
+        if args.opt == "":
             steps[n]()
         else:
-            steps[n](args.OPTION)
+            steps[n](args.opt)
     def import_modules(self):
         try:
             show("Importing python files...")
