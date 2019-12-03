@@ -65,7 +65,11 @@ class rom_toolbox:
         for i,file in zip(range(1,len(files)),files):
             print("\t"+str(i)+" : "+os.path.splitext(os.path.basename(file))[0])
         print("\n\t0 : Exit")
-        choice = int(input("Your choice : "))-1
+        try:
+            choice = int(input("Your choice : "))-1
+        except ValueError:
+            print("Wrong entry type, press 0 to exit")
+            self.chooseFile(files)
         if choice == -1:
             print("Exiting...")
             exit(0)
@@ -201,18 +205,22 @@ if os.geteuid() != 0:
     print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
     print("CODE : 1")
     exit(1)
-ru = rom_unzip()
-tb = rom_toolbox()
-if args.version:
-    print("Rom-unzip by LiteApplication verion " + str(rom_unzip.__version__))
+try:
+    ru = rom_unzip()
+    tb = rom_toolbox()
+    if args.version:
+        print("Rom-unzip by LiteApplication verion " + str(rom_unzip.__version__))
+        exit(0)
+    elif args.all:
+        ru.run_all()
+    elif args.update:
+        os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
+        exit(0)
+    elif int(args.step) == -1 and int(args.step) >= 9:
+        ru.run_step(args.step)
+    elif int(args.step) > -1 and int(args.step) < 9:
+        ru.run_all()
+except KeyboardInterrupt:
+    show("Exiting...")
     exit(0)
-elif args.all:
-    ru.run_all()
-elif args.update:
-    os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
-    exit(0)
-elif int(args.step) == -1 and int(args.step) >= 9:
-    ru.run_step(args.step)
-elif int(args.step) > -1 and int(args.step) < 9:
-    ru.run_all()
 
