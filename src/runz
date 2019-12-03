@@ -8,10 +8,10 @@ ap.add_argument("-a","--all", action="store_true", help="Run all steps, enabled 
 ap.add_argument("-u","--update", action="store_true", help="Update program and exit. ")
 ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting. ")
 ap.add_argument("-s","--show-saved", action="store_true", help="Show the actual saved state and exit. ")
-ap.add_argument("-p","--rom-path", dest='path', type=str, default=".", help="The path to rom.zip folder. ")
-ap.add_argument("-m","--step", dest='step' , type=int, default="-1", help="Run only one step of rom-unzip. Pass 0 to view options. ")
-ap.add_argument("-o","--option", dest='opt', type=str, default="", help="Argument for single step.")
-ap.add_argument("-e","--extract-dir", dest='extract', type=str, default="rom-extracted", help="Path to extract rom. ")
+ap.add_argument("-p","--rom-path", dest='path', default=".", action="store", help="The path to rom.zip folder. ")
+ap.add_argument("-m","--step", dest='step' , type=int, default="-1", action="store", help="Run only one step of rom-unzip. Pass 0 to view options. ")
+ap.add_argument("-o","--option", dest='opt', default="", action="store", help="Argument for single step.")
+ap.add_argument("-e","--extract-dir", dest='extract', default="rom-extracted", action="store", help="Path to extract rom. ")
 
 
 args = ap.parse_args()
