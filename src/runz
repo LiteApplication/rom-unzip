@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 import argparse
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
-ap.add_argument("-v","--version", action="store_true", help="Show the script version and exit. ")
-ap.add_argument("-V","--verbose", action="store_true", help="Verbosely run script. ")
-ap.add_argument("-l","--log", action="store_true", help="Save output to rom-unzip.log. ")
-ap.add_argument("-a","--all", action="store_true", help="Run all steps, enabled by default. ")
-ap.add_argument("-u","--update", action="store_true", help="Update program and exit. ")
-ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting. ")
-ap.add_argument("-s","--show-saved", action="store_true", help="Show the actual saved state and exit. ")
-ap.add_argument("-p","--rom-path", dest='path', default=".", action="store", help="The path to rom.zip folder. ")
-ap.add_argument("-m","--step", dest='step' , type=int, default="-1", action="store", help="Run only one step of rom-unzip. Pass 0 to view options. ")
-ap.add_argument("-o","--option", dest='opt', default="", action="store", help="Argument for single step.")
-ap.add_argument("-e","--extract-dir", dest='extract', default="rom-extracted", action="store", help="Path to extract rom. ")
+ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
+ap.add_argument("-V","--verbose",     action="store_true", help="Verbosely run script. ")
+ap.add_argument("-l","--log",         action="store_true", help="Save output to rom-unzip.log. ")
+ap.add_argument("-a","--all",         action="store_true", help="Run all steps, enabled by default. ")
+ap.add_argument("-u","--update",      action="store_true", help="Update program and exit. ")
+ap.add_argument("-r","--resume",      action="store_true", help="Resume previous rom extracting. ")
+ap.add_argument("-s","--show-saved",  action="store_true", help="Show the actual saved state and exit. ")
+ap.add_argument("-p","--rom-path",    action="store",      help="The path to rom.zip folder. ",                             dest='path',    default=".")
+ap.add_argument("-m","--step",        action="store",      help="Run only one step of rom-unzip. Pass 0 to view options. ", dest='step',    default="-1",  type=int, )
+ap.add_argument("-o","--option",      action="store",      help="Argument for single step.",                                dest='opt',     default="")
+ap.add_argument("-e","--extract-dir", action="store",      help="Path to extract rom. ",                                    dest='extract', default="rom-extracted")
 
 
 args = ap.parse_args()
@@ -206,7 +206,7 @@ elif args.update:
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
 elif int(args.step) == -1 and int(args.step) >= 9:
-    ru.run_step(STEP)
-elif int(STEP) > -1 and int(STEP) < 9:
+    ru.run_step(args.step)
+elif int(args.step) > -1 and int(args.step) < 9:
     ru.run_all()
 
