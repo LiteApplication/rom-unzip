@@ -159,10 +159,20 @@ class rom_unzip:
         show("Extracting vendor.new.dat.br...")
         tb.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
     def extract_dat(self):
-        os.system('sed -i "1s/.*/0/" system.transfer.list')
-        os.system('sed -i "1s/.*/0/" vendor.transfer.list')
-        sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
-        sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
+        sourceEncoding = "ascii"
+        targetEncoding = "utf-8"
+        source = open("system.transfer.list")
+        target = open("system.transfer.list.new", "w")
+        target.write(unicode(source.read(), sourceEncoding).encode(targetEncoding))
+        source.close()
+        target.close()
+        sdat2img.extract(path("system.new.dat"),path("system.transfer.list.new"),"system.img")4
+        source = open("vendor.transfer.list")
+        target = open("vendor.transfer.list.new", "w")
+        target.write(unicode(source.read(), sourceEncoding).encode(targetEncoding))
+        source.close()
+        target.close()
+        sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list.new"),"vendor.img")
     def save_img(self):
         show("Mounting system.img ...")
         os.system("mkdir system.dir")
