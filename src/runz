@@ -108,9 +108,9 @@ class rom_unzip:
             os.system("sudo umount system.dir")
             os.system("sudo umount vendor.dir")
             raise
-    def resume():
+    def resume(self):
         os.chdir(args.extract)
-        i = get_state(args.extract)
+        i = self.get_state(args.extract)
         #if i<4:
         #    self.run_all()
         for s in range(i+1, 9):
