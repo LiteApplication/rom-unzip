@@ -8,11 +8,6 @@
 
 from __future__ import print_function
 import sys, os, errno
-def printv(msg):
-    if v:
-        open(sys.argv[5],"a").write(msg)
-        print(msg)
-
 def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     __version__ = '1.2'
 
@@ -122,6 +117,12 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     output_img.close()
     new_data_file.close()
     printv('Done! Output image: {}'.format(os.path.realpath(output_img.name)))
+
+def printv(msg):
+    if v:
+        with open(sys.argv[5],"a") as log:
+            log.write(msg)
+        print(msg)
 
 if __name__ == '__main__':
     try:
