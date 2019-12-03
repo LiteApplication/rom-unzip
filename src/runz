@@ -111,7 +111,6 @@ class rom_unzip:
             import json
             import glob
             import shutil
-            tb = rom_toolbox()
         except ImportError:
             print("E05: ImportError")
             exit(1)
@@ -196,6 +195,7 @@ def show(message):
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
 ru = rom_unzip()
+tb = rom_toolbox()
 if args.version:
     print("Rom-unzip by LiteApplication verion " + str(rom_unzip.__version__))
     exit(0)
