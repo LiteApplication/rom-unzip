@@ -217,7 +217,7 @@ try:
     show("Saved     : " + str(args.show_saved))
     show("Option    : " + str(args.opt))
     show("Rom path  : " + str(args.path))
-    show("Extract   : " + str(args.exract))
+    show("Extract   : " + str(args.extract))
     ru = rom_unzip()
     tb = rom_toolbox()
     if args.version:
