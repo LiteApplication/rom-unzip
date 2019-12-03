@@ -3,7 +3,6 @@
 #Modules import
 import argparse
 import os
-import sdat2img
 from termcolor import colored
 from pwd import getpwuid
 from grp import getgrgid
@@ -159,16 +158,13 @@ class rom_unzip:
         show("Extracting vendor.new.dat.br...")
         tb.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
     def extract_dat(self):
-        with open("system.transfer.list", 'r', encoding="ascii") as f, open("system.transfer.list.new", 'w', encoding='utf-8') as e:
-            show("Converting system.transfer.list into UTF-8")
-            text = f.read()
-            e.write(text)
-        sdat2img.extract(path("system.new.dat"),path("system.transfer.list.new"),"system.img")
-        with open("vendor.transfer.list", 'r', encoding="ascii") as f, open("vendor.transfer.list.new", 'w', encoding='utf-8') as e:
-            show("Converting vendor.transfer.list into UTF-8")
-            text = f.read()
-            e.write(text)
-        sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list.new"),"vendor.img")
+        show("Extracting system.img ...")
+        o=""
+        if arg.log:
+            o = " -d ./rom-unzip-logs.txt"
+        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("system.new.dat") + " " + path("system.transfer.list.new") + " system.img" + o)
+        show("Extracting vendor.img ...")
+        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("vendor.new.dat") + " " + path("vendor.transfer.list.new") + " vendor.img" + o)
     def save_img(self):
         show("Mounting system.img ...")
         os.system("mkdir system.dir")
