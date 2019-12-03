@@ -10,6 +10,7 @@ import json
 import glob
 import shutil
 import sys
+import zipfile
 #Argument parser
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
 ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
