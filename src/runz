@@ -27,7 +27,10 @@ ap.add_argument("-e","--extract-dir", action="store",      help="Path to extract
 
 
 args = ap.parse_args()
-
+if args.step == -1:
+    args.all = True
+else:
+    args.all = False
 
 class rom_toolbox:
     __doc__ = """This class is a toolbox for rom_unzip\n"""
