@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#Modules import
 import argparse
 import os
 import sdat2img
@@ -9,6 +10,7 @@ import json
 import glob
 import shutil
 
+#Argument parser
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
 ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
 ap.add_argument("-V","--verbose",     action="store_true", help="Verbosely run script. ")
@@ -28,11 +30,7 @@ args = ap.parse_args()
 
 class rom_toolbox:
     __doc__ = """This class is a toolbox for rom_unzip\n"""
-    def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
-        if os.geteuid() != 0:
-            print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
-            print("CODE : 1")
-            exit(1)
+    def select(self, unDir="NoDir"): #return a rom zip (absolute path) from runDir
         if runDir=="NoDir":
             runDir=os.getcwd()
         ROM_FILES=['system.new.dat.br','vendor.new.dat.br','system.transfer.list','vendor.transfer.list']
@@ -55,12 +53,12 @@ class rom_toolbox:
         else:
             rom=availableRom[0]
         return rom
-    def unzip(source,path):
+    def unzip(self, source,path):
         print("Extracting rom files...")
         zipfile.ZipFile(source, 'r').extractall(path)
-    def unbr(source,path):
+    def unbr(self, source,path):
         os.system("brotli -d " + source + " -o " + path)
-    def chooseFile(files):
+    def chooseFile(self, files):
         for i,file in zip(range(1,len(files)),files):
             print("\t"+str(i)+" : "+os.path.splitext(os.path.basename(file))[0])
         print("\n\t0 : Exit")
@@ -195,6 +193,10 @@ def show(message):
             f.write(message)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
+if os.geteuid() != 0:
+    print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
+    print("CODE : 1")
+    exit(1)
 ru = rom_unzip()
 tb = rom_toolbox()
 if args.version:
