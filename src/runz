@@ -228,9 +228,9 @@ try:
     elif args.update:
         os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
         exit(0)
-    elif int(args.step) == -1 and int(args.step) >= 9:
+    elif int(args.step) > -1 and int(args.step) <= 8:
         ru.run_step(args.step)
-    elif int(args.step) > -1 and int(args.step) < 9:
+    elif int(args.step) <= -1 and int(args.step) > 9:
         ru.run_all()
 except KeyboardInterrupt:
     show("Exiting...")
