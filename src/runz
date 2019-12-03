@@ -223,10 +223,11 @@ def show(message):
         with open("./rom-unzip-logs.txt","a") as f:
             f.write(message+" \r\n")
 def mem():
-    # return the memory usage in MB
-    import psutil
-    process = psutil.Process(os.getpid())
-    mem = process.get_memory_info()[0] / float(2 ** 20)
+    import subprocess
+    out = subprocess.Popen(['ps', 'v', '-p', str(os.getpid())],
+    stdout=subprocess.PIPE).communicate()[0].split(b'\n')
+    vsz_index = out[0].split().index(b'RSS')
+    mem = float(out[1].split()[vsz_index]) / 1024
     return str(mem)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
