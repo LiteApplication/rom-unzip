@@ -164,9 +164,9 @@ class rom_unzip:
         o=""
         if args.log:
             o = " -d ./rom-unzip-logs.txt"
-        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("system.new.dat") + " " + path("system.transfer.list") + " system.img" + o)
+        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py system.new.dat system.transfer.list system.img" + o)
         show("Extracting vendor.img ...")
-        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("vendor.new.dat") + " " + path("vendor.transfer.list") + " vendor.img" + o)
+        os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py vendor.new.dat vendor.transfer.list vendor.img" + o)
     def save_img(self):
         show("Mounting system.img ...")
         os.system("mkdir system.dir")
@@ -181,7 +181,7 @@ class rom_unzip:
         FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
         permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
         show("Saving permissions for system...")
-        lf=tb.listFiles(path("system.dir"))
+        lf=tb.listFiles("system.dir")
         show("Saving permissions for system...")
         for path,progress in zip(lf,range(1,FilesNb)):
             permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
@@ -193,7 +193,7 @@ class rom_unzip:
         FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
         permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
         show("Saving permissions for vendor...")
-        lf=tb.listFiles(path("vendor.dir"))
+        lf=tb.listFiles("vendor.dir")
         show("Saving permissions for vendor...")
         for path,progress in zip(lf,range(1,FilesNb)):
             permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
