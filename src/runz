@@ -110,7 +110,7 @@ class rom_unzip:
             raise
     def resume(self):
         os.chdir(args.extract)
-        i = self.get_state(args.extract)
+        i = self.get_state(".")
         #if i<4:
         #    self.run_all()
         for s in range(i+1, 9):
