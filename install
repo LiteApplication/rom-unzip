@@ -12,6 +12,10 @@ if ! command -v python3 &>/dev/null; then
     echo "    Installing python3... Please wait, it may take a while"
     sudo apt-get install python3 python -qq > /dev/null
 fi
+if ! command -v psutil &>/dev/null; then
+    echo "    Installing psutil... Please wait, it may take a while"
+    sudo apt-get install psutil -qq > /dev/null
+fi
 if ! command -v python2 &>/dev/null; then
     echo "    Installing python2... Please wait, it may take a while"
     sudo apt-get install python2 python -qq > /dev/null
