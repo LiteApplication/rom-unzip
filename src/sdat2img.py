@@ -149,4 +149,6 @@ if __name__ == '__main__':
             v=True
         else:
             v=False
+    except:
+        pass
     main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)
