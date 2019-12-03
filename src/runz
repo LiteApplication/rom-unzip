@@ -8,16 +8,17 @@ ap.add_argument("-a","--all", action="store_true", help="Run all steps, enabled 
 ap.add_argument("-u","--update", action="store_true", help="Update program and exit. ")
 ap.add_argument("-r","--resume", action="store_true", help="Resume previous rom extracting. ")
 ap.add_argument("-s","--show-saved", action="store_true", help="Show the actual saved state and exit. ")
-ap.add_argument("-p","--rom-path", type=str, default=".", help="The path to rom.zip folder. ")
-ap.add_argument("-m","--step", type=int, default="-1", help="Run only one step of rom-unzip. Pass 0 to view options. ")
-ap.add_argument("-o","--option", type=str, default="", help="Argument for single step.")
-ap.add_argument("-e","--extract-dir", type=str, default="rom-extracted", help="Path to extract rom. ")
+ap.add_argument("-p","--rom-path", dest='path', type=str, default=".", help="The path to rom.zip folder. ")
+ap.add_argument("-m","--step", dest='step' , type=int, default="-1", help="Run only one step of rom-unzip. Pass 0 to view options. ")
+ap.add_argument("-o","--option", dest='opt', type=str, default="", help="Argument for single step.")
+ap.add_argument("-e","--extract-dir", dest='extract', type=str, default="rom-extracted", help="Path to extract rom. ")
 
 
 args = ap.parse_args()
 
 
 class rom_toolbox:
+    __doc__ = """This class is a toolbox for rom_unzip\n"""
     def select(runDir="NoDir"): #return a rom zip (absolute path) from runDir
         if os.geteuid() != 0:
             print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
@@ -66,6 +67,7 @@ class rom_toolbox:
                 yield cur + "/" + element
 
 class rom_unzip:
+    __doc__ = """This class allow you to extract Android Roms into system and vendor folders."""
     __version__ = 0.6
     def run_all(self):
         self.import_modules()
@@ -203,8 +205,8 @@ elif args.update:
     from os import system
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
-elif int(args.STEP) == -1 and int(args.STEP) >= 9:
-    ru.run_step(args.STEP)
-elif int(args.STEP) > -1 and int(args.STEP) < 9:
+elif int(STEP) == -1 and int(STEP) >= 9:
+    ru.run_step(STEP)
+elif int(STEP) > -1 and int(STEP) < 9:
     ru.run_all()
 
