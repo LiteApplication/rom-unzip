@@ -71,19 +71,19 @@ class rom_unzip:
     __version__ = 0.6
     def run_all(self):
         self.import_modules()
-        rom = self.select_rom(ROM_PATH)
-        self.create_dir(EXTRACT_DIR)
-        self.save_state(3, EXTRACT_DIR)
+        rom = self.select_rom(args.path)
+        self.create_dir(args.extract)
+        self.save_state(3, args.extract)
         self.unzip_rom(rom)
-        self.save_state(4, EXTRACT_DIR)
+        self.save_state(4, args.extract)
         self.unzip_broti()
-        self.save_state(5, EXTRACT_DIR)
+        self.save_state(5, args.extract)
         self.extract_dat()
-        self.save_state(6, EXTRACT_DIR)
+        self.save_state(6, args.extract)
         self.save_img()
-        self.save_state(7, EXTRACT_DIR)
+        self.save_state(7, args.extract)
         self.copy_img()
-        self.save_state(8, EXTRACT_DIR)
+        self.save_state(8, args.extract)
     def run_step(self,n):
         steps = {
             0 : show_steps,
