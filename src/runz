@@ -198,7 +198,7 @@ def show(message):
         print(message)
     if args.log:
         with open("./rom-unzip-logs.txt","a") as f:
-            f.write(message)
+            f.write(message+"\n")
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
 if os.geteuid() != 0:
