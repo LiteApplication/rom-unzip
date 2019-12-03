@@ -36,7 +36,7 @@ def extract(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         # First line in transfer list is the version number
         next(trans_list)
         # Second line in transfer list is the total number of blocks we expect to write
-        new_blocks = int(trans_list.readline().decode("utf-8") )
+        new_blocks = int(trans_list.readline().decode("ascii") )
         # Third line is how many stash entries are needed simultaneously
         trans_list.readline()
         # Fourth line is the maximum number of blocks that will be stashed simultaneously
