@@ -199,7 +199,8 @@ class rom_unzip:
         show("Copying files to vendor.rw")
         os.system("cp -R vendor.dir/* vendor.rw/")
     def set_state(self, state, dest):
-        os.mknod(dest+"/.state.save")
+        if not os.path.exists():
+            os.mknod(dest+"/.state.save")
         with open(dest+"/.state.save","w+") as f:
             f.write(str(state))
     def get_state(self, dest):
