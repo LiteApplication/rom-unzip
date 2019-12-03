@@ -9,19 +9,23 @@ fi
 
 echo "Checking dependances..."
 if ! command -v python3 &>/dev/null; then
-    echo "    Installing python3..."
+    echo "    Installing python3... Please wait, it may take a while"
     sudo apt-get install python3 python -qq > /dev/null
 fi
+if ! command -v python2 &>/dev/null; then
+    echo "    Installing python2... Please wait, it may take a while"
+    sudo apt-get install python2 python -qq > /dev/null
+fi
 if ! command -v git &>/dev/null; then
-    echo "    Installing git..."
+    echo "    Installing git... Please wait, it may take a while"
     sudo apt-get install git -qq > /dev/null
 fi
 if ! dpkg --list | grep " brotli  " &>/dev/null; then
-    echo "    Installing brotli..."
+    echo "    Installing brotli... Please wait, it may take a while"
     sudo apt-get install brotli -qq > /dev/null
 fi
 if ! dpkg --list | grep " python3-termcolor  " &>/dev/null; then
-    echo "    Installing python3-termcolor..."
+    echo "    Installing python3-termcolor... Please wait, it may take a while"
     sudo apt-get install python3-termcolor -qq > /dev/null
 fi
 echo "Downloading program..."
@@ -40,7 +44,6 @@ cd ..
 ln -s /etc/liteapplication/rom-unzip/runz /bin/rom-unzip
 chmod 755 -R /etc/liteapplication/rom-unzip/
 chmod 755 /bin/rom-unzip
-ln -f /etc/liteapplication/rom-unzip/*.py /usr/lib/python3/dist-packages
 echo "Cleaning temporary files..."
 cd ..
 rm -fr files
