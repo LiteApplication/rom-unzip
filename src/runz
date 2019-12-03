@@ -93,7 +93,7 @@ class rom_unzip:
         self.set_state(3, ".")
         self.unzip_rom(rom)
         self.set_state(4, ".")
-        self.unzip_broti()
+        self.unzip_brotli()
         self.set_state(5, ".")
         self.extract_dat()
         self.set_state(6, ".")
