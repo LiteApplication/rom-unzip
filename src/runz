@@ -1,5 +1,14 @@
 #!/usr/bin/python3
 import argparse
+import os
+import sdat2img
+from termcolor import colored
+from pwd import getpwuid
+from grp import getgrgid
+import json
+import glob
+import shutil
+
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
 ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
 ap.add_argument("-V","--verbose",     action="store_true", help="Verbosely run script. ")
@@ -103,14 +112,6 @@ class rom_unzip:
     def import_modules(self):
         try:
             show("Importing python files...")
-            import os
-            import sdat2img
-            from termcolor import colored
-            from pwd import getpwuid
-            from grp import getgrgid
-            import json
-            import glob
-            import shutil
         except ImportError:
             print("E05: ImportError")
             exit(1)
@@ -202,7 +203,6 @@ if args.version:
 elif args.all:
     ru.run_all()
 elif args.update:
-    from os import system
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
     exit(0)
 elif int(args.step) == -1 and int(args.step) >= 9:
