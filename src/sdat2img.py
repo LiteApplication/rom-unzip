@@ -8,6 +8,7 @@
 
 from __future__ import print_function
 import sys, os, errno
+v = False
 def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     __version__ = '1.2'
 
