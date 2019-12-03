@@ -101,17 +101,27 @@ class rom_unzip:
         self.set_state(7, ".")
         self.copy_img()
         self.set_state(8, ".")
+    def show_steps():
+        print("0 : self.show_steps")
+        print("1 : self.import_modules,")
+        print("2 : self.select_rom,")
+        print("3 : self.create_dir,")
+        print("4 : self.unzip_rom,")
+        print("5 : self.unzip_brotli,")
+        print("6 : self.extract_dat,")
+        print("7 : self.save_img,")
+        print("8 : self.copy_img")
     def run_step(self,n):
         steps = {
-            0 : show_steps,
-            1 : import_modules,
-            2 : select_rom,
-            3 : create_dir,
-            4 : unzip_rom,
-            5 : unzip_brotli,
-            6 : extract_dat,
-            7 : save_img,
-            8 : copy_img
+            0 : self.show_steps,
+            1 : self.import_modules,
+            2 : self.select_rom,
+            3 : self.create_dir,
+            4 : self.unzip_rom,
+            5 : self.unzip_brotli,
+            6 : self.extract_dat,
+            7 : self.save_img,
+            8 : self.copy_img
         }
         if args.OPTION == "":
             steps[n]()
