@@ -159,6 +159,8 @@ class rom_unzip:
         show("Extracting vendor.new.dat.br...")
         tb.unbr(path("vendor.new.dat.br"),"vendor.new.dat")
     def extract_dat(self):
+        os.system('sed -i "1s/.*/0/" system.transfer.list')
+        os.system('sed -i "1s/.*/0/" vendor.transfer.list')
         sdat2img.extract(path("system.new.dat"),path("system.transfer.list"),"system.img")
         sdat2img.extract(path("vendor.new.dat"),path("vendor.transfer.list"),"vendor.img")
     def save_img(self):
