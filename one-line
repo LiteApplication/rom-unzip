@@ -1,0 +1,1 @@
+curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash && sudo rom-unzip -Vla
