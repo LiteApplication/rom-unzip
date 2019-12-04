@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Welcome to ROM Unzipper by LiteApplication v0.3"
+echo "Welcome to ROM Unzipper by LiteApplication v1.0"
 wd=$(pwd)
 echo  "Checking root access..."
 if [[ $EUID -ne 0 ]]; then
