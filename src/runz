@@ -233,7 +233,7 @@ if os.geteuid() != 0:
     print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
     print("CODE : 1")
     exit(1)
-last = float(os.system("curl https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version -L"))
+last = float(os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version"))
 if float(rom_unzip.__version__) < float(last) and not args.no_update:
     show("Updating ...")
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
