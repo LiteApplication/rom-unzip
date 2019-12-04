@@ -1,7 +1,7 @@
 # ROM Unzip
 Unzip an Android ROM to system and vendor
 ## One-line: 
-`curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash && rom-unzip -Vla`
+`curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/v2.0/install | sudo bash && rom-unzip -Vla`
 ## Usage
 The easiest way to extract rom is to run `sudo rom-unzip` in the rom folder and to wait about 10 minutes without using computer until you see your shell prompt.\
 If you want to see the progression, run `sudo rom-unzip -V`. To resume an old extract, go to the same folder, run the same command and add `-r` at the bottom (BETA)\
