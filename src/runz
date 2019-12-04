@@ -87,7 +87,7 @@ class rom_toolbox:
 
 class rom_unzip:
     __doc__ = """This class allow you to extract Android Roms into system and vendor folders."""
-    __version__ = 0.6
+    __version__ = 1.0
     def run_all(self):
         self.import_modules()
         rom = self.select_rom(args.path)
