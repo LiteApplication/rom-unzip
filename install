@@ -51,6 +51,6 @@ chmod 755 /bin/rom-unzip
 echo "Cleaning temporary files..."
 cd ..
 rm -fr files
-echo "Successfully installed rom-unzip version " $( curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version -L)
+echo "Successfully installed rom-unzip version " $( curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version)
 echo "run 'sudo rom-unzip -V' to start. "
 exit 0
