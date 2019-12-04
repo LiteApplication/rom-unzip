@@ -26,7 +26,7 @@ optional arguments:
   -e, --extract-dir EXTRACT  Path to extract rom.
 ```
 ## Installation
-Just run `curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash` to install ROM-Unzip.\
+Just run `curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/v2.0/install | sudo bash` to install ROM-Unzip.\
 If you want to download the file for run it later, install on multiple computer or read it from your computer, you can download it at [raw.github.com](https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install)\
 To install the program , just run `./install` , no need to download the entire repository, just download and run install.\
 ## Performances
