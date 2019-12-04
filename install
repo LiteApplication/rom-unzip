@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Welcome to ROM Unzipper by LiteApplication v2.0"
 wd=$(pwd)
 echo  "Checking root access..."
@@ -6,7 +7,6 @@ if [[ $EUID -ne 0 ]]; then
    echo "    This script must be run as root" 1>&2
    exit 1
 fi
-
 echo "Checking dependances..."
 if ! command -v python3 &>/dev/null; then
     echo "    Installing python3... Please wait, it may take a while"
@@ -14,7 +14,7 @@ if ! command -v python3 &>/dev/null; then
 fi
 if ! dpkg --list | grep " python3-psutil" &>/dev/null; then
     echo "    Installing psutil... Please wait, it may take a while"
-    sudo apt-get install python3-psutil -qq > /dev/null
+    sudo apt-get install python3-psutil -qq > /dev/null-+
 fi
 if ! command -v python2 &>/dev/null; then
     echo "    Installing python2... Please wait, it may take a while"
@@ -51,6 +51,6 @@ chmod 755 /bin/rom-unzip
 echo "Cleaning temporary files..."
 cd ..
 rm -fr files
-echo "Install complete, use rom-unzip to start"
+echo "Successfully installed rom-unzip version " $( curl https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version -L)
+echo "run 'sudo rom-unzip -V' to start. "
 exit 0
-
