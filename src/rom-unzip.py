@@ -110,14 +110,14 @@ class rom_unzip:
         for s in range(i+1, 8):
             self.run_step(s)
     def show_steps(self):
-        print("0 : self.show_steps")
-        print("1 : self.import_modules")
-        print("2 : self.select_rom")
-        print("3 : self.create_dir")
-        print("4 : self.unzip_rom")
-        print("5 : self.unzip_brotli")
-        print("6 : self.extract_dat")
-        print("7 : self.save_img")
+        print("0 : show_steps")
+        print("1 : import_modules")
+        print("2 : select_rom")
+        print("3 : create_dir")
+        print("4 : unzip_rom")
+        print("5 : unzip_brotli")
+        print("6 : extract_dat")
+        print("7 : save_img")
     def run_step(self,n):
         steps = {
             0 : self.show_steps,
