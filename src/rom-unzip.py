@@ -109,7 +109,7 @@ class rom_unzip:
         #    self.run_all()
         for s in range(i+1, 8):
             self.run_step(s)
-    def show_steps():
+    def show_steps(self):
         print("0 : self.show_steps")
         print("1 : self.import_modules,")
         print("2 : self.select_rom,")
