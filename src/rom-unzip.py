@@ -178,31 +178,7 @@ class rom_unzip:
         show("Mounting vendor.img ...")
         os.system("mkdir vendor.dir")
         os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
-        show("Analysing system...")
-        if os.path.exists("/SYSTEM_PERMISSIONS"):
-            os.remove(path("/SYSTEM_PERMISSIONS"))
-        permissions=open("./SYSTEM_PERMISSIONS","a+")
-        FilesNb = sum([len(files) for r, d, files in os.walk("system.dir")])
-        permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
-        show("Saving permissions for system...")
-        lf=tb.listFiles("system.dir")
-        show("Saving permissions for system...")
-        for path,progress in zip(lf,range(1,FilesNb)):
-            permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
-        permissions.close()
-        show("Analysing vendor...")
-        if os.path.exists("/VENDOR_PERMISSIONS"):
-            os.remove(path("/VENDOR_PERMISSIONS"))
-        permissions=open("./VENDOR_PERMISSIONS","a+")
-        FilesNb = sum([len(files) for r, d, files in os.walk("vendor.dir")])
-        permissions.write("### Files and folders : " + str(FilesNb) + " ###\n")
-        show("Saving permissions for vendor...")
-        lf=tb.listFiles("vendor.dir")
-        show("Saving permissions for vendor...")
-        for path,progress in zip(lf,range(1,FilesNb)):
-            permissions.write(json.dumps([path,oct(stat.st_mode)[-3:],getpwuid(stat.st_uid).pw_name,getgrgid(stat.st_gid).gr_name]))
-        permissions.close()
-        os.system("sudo nautilus " + args.extract)
+        os.system("sudo nautilus " + args.extract+" > /dev/null")
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
