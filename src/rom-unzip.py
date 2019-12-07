@@ -223,7 +223,7 @@ if os.geteuid() != 0:
     exit(1)
 last = float(urllib.request.urlopen("https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version").readline())
 if float(rom_unzip.__version__) < float(last) and not args.no_update:
-    show("Updating ...")
+    show("A new version of rom-unzip is available, updating ...")
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
 try:
     show("Rom-unzip by LiteApplication v" + str(rom_unzip.__version__))
