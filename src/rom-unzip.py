@@ -2,6 +2,8 @@
 # coding: utf8
 
 #Modules import
+import memory_profiler
+import time
 import argparse
 import os
 from termcolor import colored
@@ -14,12 +16,16 @@ import sys
 import zipfile
 from datetime import datetime
 
+#Save original performances
+start_memory = memory_profiler.memory_usage()
+start_time = time.time()
+
 #Argument parser
 ap = argparse.ArgumentParser(description="Unzip an Android rom to system.img and vendor.img. ")
 ap.add_argument("-v","--version",     action="store_true", help="Show the script version and exit. ")
 ap.add_argument("-V","--verbose",     action="store_true", help="Verbosely run script. ")
 ap.add_argument("-n","--no-update",   action="store_true", help="Block auto-update. ")
-ap.add_argument("-l","--log",         action="store_true", help="Save output to rom-unzip.log. ")
+ap.add_argument("-l","--log",         action="store",      dest="log",default="none",help="Run the script and save logs. ")
 ap.add_argument("-a","--all",         action="store_true", help="Run all steps, enabled by default. ")
 ap.add_argument("-u","--update",      action="store_true", help="Update program and exit. ")
 ap.add_argument("-r","--resume",      action="store_true", help="Resume previous rom extracting. ")
@@ -199,20 +205,15 @@ class rom_unzip:
             return str(f.readlines()[0])
 
 def show(message):
-    now = datetime.now()
-    message = "[ " + now.strftime("%d/%m %H:%M:%S") + " ] MEM : "+ mem() + " MB :\t" + message
-    if args.verbose:
-        print(message)
-    if args.log:
-        with open("./rom-unzip-logs.txt","a") as f:
-            f.write(message+" \r\n")
-def mem():
-    import subprocess
-    out = subprocess.Popen(['ps', 'v', '-p', str(os.getpid())],
-    stdout=subprocess.PIPE).communicate()[0].split(b'\n')
-    vsz_index = out[0].split().index(b'RSS')
-    mem = float(out[1].split()[vsz_index]) / 1024
-    return str(mem)
+    if args.verbose or args.log != "none":
+        time_act = round( time.time() - start_time, 2 )
+        mem_act = round( memory_profiler.memory_usage()[0] - start_memory[0], 2 )
+        message="[ EXEC = {} , MEM = {} ]\t {}".format(time_act,mem_act,message)
+        if args.verbose:
+            print(message)
+        if args.log != "none":
+            with open(args.log,'a') as l:
+                l.write(message)
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
 if os.geteuid() != 0:
