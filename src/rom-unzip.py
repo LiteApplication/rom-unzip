@@ -221,10 +221,15 @@ if os.geteuid() != 0:
     print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
     print("CODE : 1")
     exit(1)
-last = float(urllib.request.urlopen("https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version").readline())
-if float(rom_unzip.__version__) < float(last) and not args.no_update:
-    show("A new version of rom-unzip is available, updating ...")
-    os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
+try:
+    last = float(urllib.request.urlopen("https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version").readline())
+    if float(rom_unzip.__version__) < float(last) and not args.no_update:
+        show("A new version of rom-unzip is available, updating ...")
+        os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
+        show("Done. ")
+        os.execv(__file__, sys.argv)
+except:
+    show("Cannot check for update")
 try:
     show("Rom-unzip by LiteApplication v" + str(rom_unzip.__version__))
     ru = rom_unzip()
