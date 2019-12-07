@@ -191,12 +191,9 @@ class rom_unzip:
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
-        with open(dest+"/.state.save","r") as f:
-            content = f.readlines()
-            content[0] = str(state)
-            content[1] = self.rom
+        content = [str(state),str(self.rom)]
         with open(dest+"/.state.save","w") as f:
-            f.write(content)
+            f.writelines(content)
     def get_state(self, dest):
         with open(dest+"/.state.save","r+") as f:
             return str(f.readlines()[0])
