@@ -226,17 +226,6 @@ if float(rom_unzip.__version__) < float(last) and not args.no_update:
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
 try:
     show("Rom-unzip by LiteApplication v" + str(rom_unzip.__version__))
-    show("Step      : " + str(args.step))
-    show("Log       : " + str(args.log))
-    show("Verbose   : " + str(args.verbose))
-    show("All       : " + str(args.all))
-    show("Version   : " + str(args.version))
-    show("Resume    : " + str(args.resume))
-    show("Update    : " + str(args.update))
-    show("Saved     : " + str(args.saved))
-    show("Option    : " + str(args.opt))
-    show("Rom path  : " + str(args.path))
-    show("Extract   : " + str(args.extract))
     ru = rom_unzip()
     tb = rom_toolbox()
     if args.version:
