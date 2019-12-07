@@ -209,7 +209,7 @@ def show(message):
     if args.verbose or args.log != "none":
         time_act = round( time.time() - start_time, 2 )
         mem_act = round( memory_profiler.memory_usage()[0] - start_memory[0], 2 )
-        message="[ EXEC = {} , MEM = {} ]\t {}".format(time_act,mem_act,message)
+        message="[ EXEC = {}s , MEM = {}MB ]\t {}".format(time_act,mem_act,message)
         if args.verbose:
             print(message)
         if args.log != "none":
