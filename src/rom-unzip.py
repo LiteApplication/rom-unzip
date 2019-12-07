@@ -15,6 +15,7 @@ import shutil
 import sys
 import zipfile
 from datetime import datetime
+import urllib.request
 
 #Save original performances
 start_memory = memory_profiler.memory_usage()
@@ -113,8 +114,8 @@ class rom_unzip:
     def resume(self):
         os.chdir(args.extract)
         i = int(self.get_state("."))
-        #if i<4:
-        #    self.run_all()
+        if i<4:
+            self.run_all()
         for s in range(i+1, 8):
             self.run_step(s)
     def show_steps(self):
@@ -197,7 +198,7 @@ class rom_unzip:
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
-        content = [str(state),str(self.rom)]
+        content = [str(state),"\n",str(self.rom)]
         with open(dest+"/.state.save","w") as f:
             f.writelines(content)
     def get_state(self, dest):
@@ -220,7 +221,7 @@ if os.geteuid() != 0:
     print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
     print("CODE : 1")
     exit(1)
-last = float(os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version"))
+last = float(urllib.request.urlopen("https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version").readline())
 if float(rom_unzip.__version__) < float(last) and not args.no_update:
     show("Updating ...")
     os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
