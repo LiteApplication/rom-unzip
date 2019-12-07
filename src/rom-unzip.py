@@ -90,12 +90,13 @@ class rom_toolbox:
 class rom_unzip:
     __doc__ = """This class allow you to extract Android Roms into system and vendor folders."""
     __version__ = open("/etc/liteapplication/rom-unzip/version").readline()
+    rom=""
     def run_all(self):
         self.import_modules()
-        rom = self.select_rom(args.path)
+        self.rom = self.select_rom(args.path)
         self.create_dir(args.extract)
         self.set_state(3, ".")
-        self.unzip_rom(rom)
+        self.unzip_rom(self.rom)
         self.set_state(4, ".")
         self.unzip_brotli()
         self.set_state(5, ".")
@@ -180,14 +181,24 @@ class rom_unzip:
         os.system("mkdir vendor.dir")
         os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
         os.system("sudo nautilus " + args.extract+" > /dev/null")
+        unnecessary_files = ["system.new.dat.br","system.new.dat","system.transfer.list","vendor.new.dat.br","vendor.new.dat","vendor.transfer.list"]
+        for file in unnecessary_files:
+            try:
+                os.remove(file)
+                show("Removed '{}'".format(file))
+            except:
+                show("Unable to remove '{}'".format(file))
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
-        with open(dest+"/.state.save","w+") as f:
-            f.write(str(state))
+        with open(dest+"/.state.save","w") as f:
+            content = f.readlines()
+            content[0] = str(state)
+            content[1] = self.rom
+            f.write(content)
     def get_state(self, dest):
         with open(dest+"/.state.save","r+") as f:
-            return str(f.readline())
+            return str(f.readlines()[0])
 
 def show(message):
     now = datetime.now()
