@@ -53,27 +53,35 @@ class rom_toolbox:
         ROM_FILES=['system.new.dat.br','vendor.new.dat.br','system.transfer.list','vendor.transfer.list']
         show("Finding ROM zip file...")
         availableZip=glob.glob(runDir+"/*.zip")
+        show("AvailableZipFiles : " + str(availableZip))
         availableRom=[]
         for zipp in availableZip:
             zipf = zipfile.ZipFile(zipp)
             add=False
             for file in ROM_FILES:
                 if file in zipf.namelist():
+                    show("ZipFile({}) : File '{}' available".format(zipp,file))
                     add=True
             if add:
                availableRom.append(zipp)
         if len(availableRom)>= 2:
+            show("Multiple rom available : " + availableRom)
             print("Multiple ROMs are available in this directory : ")
             rom=self.chooseFile(availableRom)
         elif availableRom==[]:
+            show("No rom available")
             return "NOROM"
         else:
+            show("One rom available : " + availableRom[0])
             rom=availableRom[0]
+        show("Returning rom "+ rom)
         return rom
     def unzip(self, source,path):
         show("Extracting rom files...")
+        show("Started rom_toolbox.unzip()")
         zipfile.ZipFile(source, 'r').extractall(path)
     def unbr(self, source,path):
+        show("Started rom_toolbox.unbr()")
         os.system("brotli -d " + source + " -o " + path + "> /dev/null")
     def chooseFile(self, files):
         for i,file in zip(range(1,len(files)),files):
@@ -83,24 +91,24 @@ class rom_toolbox:
             choice = int(input("Your choice : "))-1
         except ValueError:
             print("Wrong entry type, press 0 to exit")
+            show("ValueError")
             self.chooseFile(files)
         if choice == -1:
             print("Exiting...")
+            show("Exit(0)")
             exit(0)
         else:
             return files[choice]
-    def listFiles(self, rootdir):
-        for (cur,subdir,files) in os.walk('Test', topdown=True): 
-            for element in subdir+files:
-                yield cur + "/" + element
 
 class rom_unzip:
     __doc__ = """This class allow you to extract Android Roms into system and vendor folders."""
     __version__ = open("/etc/liteapplication/rom-unzip/version").readline()
     rom=""
     def run_all(self):
+        show("Started run_all()")
         self.import_modules()
         self.rom = self.select_rom(args.path)
+        show("Using " + self.rom)
         self.create_dir(args.extract)
         self.set_state(3, ".")
         self.unzip_rom(self.rom)
@@ -111,7 +119,9 @@ class rom_unzip:
         self.set_state(6, ".")
         self.save_img()
         self.set_state(7, ".")
+        show("Extractin complete. ")
     def resume(self):
+        show("Resuming ... ")
         os.chdir(args.extract)
         i = int(self.get_state("."))
         if i<4:
@@ -128,6 +138,7 @@ class rom_unzip:
         print("6 : extract_dat")
         print("7 : save_img")
     def run_step(self,n):
+        show("Started ron_step(n)")
         steps = {
             0 : self.show_steps,
             1 : self.import_modules,
@@ -195,6 +206,8 @@ class rom_unzip:
                 show("Removed '{}'".format(file))
             except:
                 show("Unable to remove '{}'".format(file))
+        os.system("sudo nautilus " + os.getcwd() + " &")
+        time.sleep(2)
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
