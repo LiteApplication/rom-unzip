@@ -226,7 +226,7 @@ def show(message):
             print(message)
         if args.log != "none":
             with open(args.log,'a') as l:
-                l.write(message)
+                l.write(message + "\r\n")
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
 if os.geteuid() != 0:
