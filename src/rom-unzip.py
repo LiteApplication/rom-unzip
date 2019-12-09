@@ -194,7 +194,7 @@ class rom_unzip:
         os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("vendor.transfer.list") + " " + path("vendor.new.dat") + " vendor.img" + o)
     def save_img(self):
         try:
-            os.chdir(arg.extract)
+            os.chdir(os.path.realpath(arg.extract))
         except:
             pass
         show("Mounting system.img ...")
