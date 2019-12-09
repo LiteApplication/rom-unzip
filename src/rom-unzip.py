@@ -203,13 +203,17 @@ class rom_unzip:
         os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
         unnecessary_files = ["system.new.dat.br","system.new.dat","system.transfer.list","system.patch.dat","vendor.new.dat.br","vendor.new.dat","vendor.transfer.list","vendor.patch.dat"]
         for file in unnecessary_files:
-            try:
+            if os.path.exists(file):
                 os.remove(file)
                 show("Removed '{}'".format(file))
-            except:
-                show("Unable to remove '{}'".format(file))
+        if os.path.isdir("./system"):
+            shutil.rmtree("./system")
+            show("Removed system unnecessary folder")
+        if os.path.isdir("./vendor"):
+            shutil.rmtree("./vendor")
+            show("Removed vendor unnecessary folder")
         os.system("sudo nautilus " + os.getcwd() + " &")
-        time.sleep(2)
+        show("Run 'sudo rom-unzip -U' to unmount. ")
     def umount(self):
         os.system("sudo umount {}/system.dir".format(args.extract))
         os.system("sudo umount {}/vendor.dir".format(args.extract))
