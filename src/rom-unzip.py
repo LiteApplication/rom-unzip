@@ -193,10 +193,8 @@ class rom_unzip:
         show("Extracting vendor.img ...")
         os.system("sudo python2 /etc/liteapplication/rom-unzip/sdat2img.py " + path("vendor.transfer.list") + " " + path("vendor.new.dat") + " vendor.img" + o)
     def save_img(self):
-        try:
-            os.chdir(os.path.realpath(arg.extract))
-        except:
-            pass
+        if not args.extract in os.getcwd():
+            os.chdir(os.path.realpath(args.extract))
         show("Mounting system.img ...")
         os.system("mkdir system.dir")
         os.system("sudo mount -t ext4 -o loop system.img system.dir/")
@@ -270,6 +268,7 @@ try:
         show("Unmounting system and vendor, 'sudo rom-unzip -m 7' to reverse. ")
         root()
         ru.umount()
+        exit(0)
     if args.resume:
         root()
         ru.resume()
