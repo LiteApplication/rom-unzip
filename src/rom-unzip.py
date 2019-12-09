@@ -187,8 +187,8 @@ class rom_unzip:
         show("Mounting vendor.img ...")
         os.system("mkdir vendor.dir")
         os.system("sudo mount -t ext4 -o loop vendor.img vendor.dir/")
-        os.system("sudo nautilus " + args.extract+" > /dev/null")
-        unnecessary_files = ["system.new.dat.br","system.new.dat","system.transfer.list","vendor.new.dat.br","vendor.new.dat","vendor.transfer.list"]
+        os.system("sudo nautilus .")
+        unnecessary_files = ["system.new.dat.br","system.new.dat","system.transfer.list","system.patch.dat","vendor.new.dat.br","vendor.new.dat","vendor.transfer.list","vendor.patch.dat"]
         for file in unnecessary_files:
             try:
                 os.remove(file)
