@@ -31,6 +31,7 @@ ap.add_argument("-a","--all",         action="store_true", help="Run all steps, 
 ap.add_argument("-u","--update",      action="store_true", help="Update program and exit. ")
 ap.add_argument("-r","--resume",      action="store_true", help="Resume previous rom extracting. ")
 ap.add_argument("-s","--show-saved",  action="store_true", help="Show the actual saved state and exit. ",                   dest='saved')
+ap.add_argument("-U","--umount",  action="store_true", help="Unmount a previous extraction, needed before remove. The orther alternative is rebooting computer.",                   dest='umount')
 ap.add_argument("-p","--rom-path",    action="store",      help="The path to rom.zip folder. ",                             dest='path',    default=".")
 ap.add_argument("-m","--step",        action="store",      help="Run only one step of rom-unzip. Pass 0 to view options. ", dest='step',    default="-1",  type=int, )
 ap.add_argument("-o","--option",      action="store",      help="Argument for single step.",                                dest='opt',     default="")
@@ -119,7 +120,7 @@ class rom_unzip:
         self.set_state(6, ".")
         self.save_img()
         self.set_state(7, ".")
-        show("Extractin complete. ")
+        show("Extraction complete. ")
     def resume(self):
         show("Resuming ... ")
         os.chdir(args.extract)
@@ -207,6 +208,11 @@ class rom_unzip:
                 show("Unable to remove '{}'".format(file))
         os.system("sudo nautilus " + os.getcwd() + " &")
         time.sleep(2)
+    def umount(self):
+        os.system("sudo umount {}/system.dir".format(args.extract))
+        os.system("sudo umount {}/vendor.dir".format(args.extract))
+        os.rmdir("{}/system.dir".format(args.extract))
+        os.rmdir("{}/vendor.dir".format(args.extract))
     def set_state(self, state, dest):
         if not os.path.exists(dest+"/.state.save"):
             os.mknod(dest+"/.state.save")
@@ -229,14 +235,16 @@ def show(message):
                 l.write(message + "\r\n")
 def path(s):
     return os.path.abspath(glob.glob(s)[0])
-if os.geteuid() != 0:
-    print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
-    print("CODE : 1")
-    exit(1)
+def root():
+    if os.geteuid() != 0:
+        print("Please run this script as root\nwith 'sudo "+sys.argv[0]+"'")
+        print("CODE : 1")
+        exit(1)
 try:
     last = float(urllib.request.urlopen("https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/src/version").readline())
     if float(rom_unzip.__version__) < float(last) and not args.no_update:
         show("A new version of rom-unzip is available, updating ...")
+        root()
         os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash > /dev/null")
         show("Done. ")
         os.execv(__file__, sys.argv)
@@ -251,17 +259,26 @@ try:
         exit(0)
     elif args.update:
         show("Updating ...")
+        root()
         os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
         exit(0)
+    elif args.umount:
+        show("Unmounting system and vendor, 'sudo rom-unzip -m 7' to reverse. ")
+        root()
+        ru.umount()
     if args.resume:
+        root()
         ru.resume()
     elif int(args.step) > -1 and int(args.step) <= 8:
+        root()
         ru.run_step(args.step)
     elif int(args.step) <= -1 and int(args.step) > 9:
+        root()
         ru.run_all()
     elif args.saved:
         print(ru.get_state(args.extract))
     elif args.all:
+        root()
         ru.run_all()
 except KeyboardInterrupt:
     show("Exiting...")
