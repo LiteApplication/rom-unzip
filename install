@@ -47,7 +47,6 @@ mv src/* /etc/liteapplication/rom-unzip/
 cd ..
 ln -s /etc/liteapplication/rom-unzip/rom-unzip.py /bin/rom-unzip
 chmod 755 -R /etc/liteapplication/rom-unzip/
-chmod 755 /bin/rom-unzip
 echo "Cleaning temporary files..."
 cd ..
 rm -fr files
