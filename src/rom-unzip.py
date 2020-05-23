@@ -2,7 +2,6 @@
 # coding: utf8
 
 #Modules import
-import memory_profiler
 import time
 import argparse
 import os
@@ -18,7 +17,6 @@ from datetime import datetime
 import urllib.request
 
 #Save original performances
-start_memory = memory_profiler.memory_usage()
 start_time = time.time()
 
 #Argument parser
@@ -232,8 +230,7 @@ class rom_unzip:
 def show(message):
     if args.verbose or args.log != "none":
         time_act = round( time.time() - start_time, 2 )
-        mem_act = round( memory_profiler.memory_usage()[0] - start_memory[0], 2 )
-        message="[ EXEC = {}s , MEM = {}MB ]\t {}".format(time_act,mem_act,message)
+        message="[ EXEC = {}s ]\t {}".format(time_act,message)
         if args.verbose:
             print(message)
         if args.log != "none":
@@ -269,7 +266,7 @@ try:
         os.system("curl -s https://raw.githubusercontent.com/LiteApplication/rom-unzip/master/install | sudo bash")
         exit(0)
     elif args.umount:
-        show("Unmounting system and vendor, 'sudo rom-unzip -m 7' to reverse. ")
+        show("Unmounting system and vendor, 'sudo rom-unzip -m 7' to remount. ")
         root()
         ru.umount()
         exit(0)
