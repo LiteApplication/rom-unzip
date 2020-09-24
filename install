@@ -28,8 +28,6 @@ if ! dpkg --list | grep " brotli  " &>/dev/null; then
     echo "    Installing brotli... Please wait, it may take a while"
     sudo apt-get install brotli -qq > /dev/null || echo "brotli is not installed, please install it"
 fi
-
-fi
 echo "Downloading program..."
 mkdir files
 cd files
