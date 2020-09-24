@@ -5,7 +5,6 @@
 import time
 import argparse
 import os
-from termcolor import colored
 from pwd import getpwuid
 from grp import getgrgid
 import json
@@ -161,10 +160,10 @@ class rom_unzip:
     def select_rom(self, romdir):
         rompath=tb.select(path(romdir))
         if rompath=="NOROM":
-            print(colored("E02 : NoRomError, Please cd to the rom.zip folder","red"))
+            print("E02 : NoRomError, Please cd to the rom.zip folder","red")
             exit(1)
         if not os.path.isfile(rompath):
-            print(colored("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red"))
+            print("E03 : NotFileError, The selected ROM is not a file (" + rompath + ").Please cd to the rom.zip folder and select it. ","red")
             exit(1)
         return rompath
     def create_dir(self, extract):
