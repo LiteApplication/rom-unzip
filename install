@@ -10,27 +10,25 @@ fi
 echo "Checking dependances..."
 if ! command -v python3 &>/dev/null; then
     echo "    Installing python3... Please wait, it may take a while"
-    sudo apt-get install python3 python -qq > /dev/null
+    sudo apt-get install python3 python -qq > /dev/null || echo "python3 is not installed, please install it"
 fi
 if ! dpkg --list | grep " python3-psutil" &>/dev/null; then
     echo "    Installing psutil... Please wait, it may take a while"
-    sudo apt-get install python3-psutil -qq > /dev/null-+
+    sudo apt-get install python3-psutil -qq > /dev/null || echo "python3-psutil is not installed, please install it"
 fi
 if ! command -v python2 &>/dev/null; then
     echo "    Installing python2... Please wait, it may take a while"
-    sudo apt-get install python2 python -qq > /dev/null
+    sudo apt-get install python2 python -qq > /dev/null || echo "python2 is not installed, please install it"
 fi
 if ! command -v git &>/dev/null; then
     echo "    Installing git... Please wait, it may take a while"
-    sudo apt-get install git -qq > /dev/null
+    sudo apt-get install git -qq > /dev/null || echo "git is not installed, please install it"
 fi
 if ! dpkg --list | grep " brotli  " &>/dev/null; then
     echo "    Installing brotli... Please wait, it may take a while"
-    sudo apt-get install brotli -qq > /dev/null
+    sudo apt-get install brotli -qq > /dev/null || echo "brotli is not installed, please install it"
 fi
-if ! dpkg --list | grep " python3-termcolor  " &>/dev/null; then
-    echo "    Installing python3-termcolor... Please wait, it may take a while"
-    sudo apt-get install python3-termcolor -qq > /dev/null
+
 fi
 echo "Downloading program..."
 mkdir files
